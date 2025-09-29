@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خمسات - لبيع وشراء الخدمات المصغرة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* الأساسيات */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', 'Noto Arabic', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* شريط التنقل */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #353333;
+            padding: 0 20px;
+            height: 70px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        
+        .right-side {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .right-side img {
+            height: 40px;
+        }
+        
+        .menu-icon {
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .left-side {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .left-side a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.1);
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        
+        .left-side a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .left-side i {
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .left-side i:hover {
+            color: #f1c40f;
+        }
+        
+        /* المحتوى الرئيسي */
+        .content {
+            margin-top: 100px;
+            padding: 20px;
+        }
+        
+        /* قسم البطل - تم التعديل */
+        .hero {
+            background:  url('https://khamsat.hsoubcdn.com/assets/images/hero-33cc6eb8f1a98f8aacf154a4ff4c5f76d5610553e8ba4accb6d22515a64a184a.jpg') no-repeat center center/cover;
+            color: #000;
+            padding: 180px 80px;
+            text-align: center;
+            border-radius: 0;
+            margin-bottom: 40px;
+            position: relative;
+            margin: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #000;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #000;
+        }
+        
+        .search-form {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+        
+        .search-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+        }
+        
+        .search-form button {
+            background: #1abc9c;
+            color: white;
+            border: none;
+            padding: 0 25px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .search-form button:hover {
+            background: #16a085;
+        }
+        
+        .popular-tags {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .popular-tags h2 {
+            width: 100%;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: #000;
+        }
+        
+        .popular-tags a {
+            background: rgba(0, 0, 0, 0.1);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            transition: background 0.3s;
+            border: 1px solid #ddd;
+        }
+        
+        .popular-tags a:hover {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        /* قسم التصنيفات - التصميم الجديد */
+        .categories {
+            padding: 40px 0;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-card {
+            position: relative;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .category-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .category-overlay h3 {
+            font-size: 22px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            padding: 0 10px;
+        }
+        
+        /* قسم الخدمات الشائعة - التصميم الجديد */
+        .services {
+            padding: 40px 0;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .service-card {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eee;
+            height: 100px;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            background: #fff;
+        }
+        
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-left: 15px;
+            flex-shrink: 0;
+        }
+        
+        .service-icon img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        
+        .service-info {
+            flex: 1;
+        }
+        
+        .service-info h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .service-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .service-orders {
+            font-size: 13px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        /* قسم المميزات */
+        .features {
+            padding: 40px 0;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-item img {
+            margin-bottom: 15px;
+        }
+        
+        .feature-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .feature-item p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* قسم الخدمات المميزة - التصميم الجديد */
+        .featured-services {
+            padding: 40px 0;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        
+        .featured-services-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .featured-service-card {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+        }
+        
+        .featured-service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .featured-service-image {
+            height: 160px;
+            overflow: hidden;
+        }
+        
+        .featured-service-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .featured-service-card:hover .featured-service-image img {
+            transform: scale(1.05);
+        }
+        
+        .featured-service-content {
+            padding: 15px;
+        }
+        
+        .featured-service-title {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            line-height: 1.4;
+            height: 45px;
+            overflow: hidden;
+        }
+        
+        .featured-service-category {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .featured-service-price {
+            font-size: 16px;
+            color: #1abc9c;
+            font-weight: 700;
+        }
+        
+        /* قسم حلول متكاملة - التصميم الجديد */
+        .solutions {
+            padding: 60px 0;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .solution-card {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            background: #fff;
+        }
+        
+        .solution-icon {
+            width: 60px;
+            height: 60px;
+            background: #1abc9c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .solution-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .solution-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* قسم الأسئلة الشائعة - تم التطوير */
+        .faq {
+            padding: 40px 0;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 40px;
+        }
+        
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+            gap: 20px;
+        }
+        
+        .faq-column {
+            padding: 10px;
+        }
+        
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            padding: 15px;
+            background: #f8f9fa;
+            font-weight: bold;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            left: 15px;
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .faq-answer {
+            padding: 0 15px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        
+        input[type="checkbox"] {
+            display: none;
+        }
+        
+        input[type="checkbox"]:checked + .faq-question + .faq-answer {
+            max-height: 500px;
+            padding: 15px;
+        }
+        
+        input[type="checkbox"]:checked + .faq-question::after {
+            content: '-';
+        }
+        
+        /* التذييل */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: #1abc9c;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: #1abc9c;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* التجاوب مع الشاشات المختلفة */
+        @media (max-width: 1200px) {
+            .featured-services-grid,
+            .solutions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 10px;
+            }
+            
+            .left-side a span {
+                display: none;
+            }
+            
+            .hero {
+                padding: 100px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .search-form {
+                flex-direction: column;
+            }
+            
+            .search-form input {
+                border-radius: 4px;
+                margin-bottom: 10px;
+            }
+            
+            .search-form button {
+                border-radius: 4px;
+            }
+            
+            .categories-grid,
+            .services-grid,
+            .features-grid,
+            .footer-grid,
+            .faq-grid,
+            .featured-services-grid,
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-card {
+                height: 150px;
+            }
+            
+            .category-overlay h3 {
+                font-size: 18px;
+            }
+            
+            .popular-tags h2 {
+                font-size: 1rem;
+            }
+            
+            .service-card {
+                height: auto;
+                padding: 12px;
+            }
+            
+            .service-icon {
+                width: 60px;
+                height: 60px;
+                margin-left: 10px;
+            }
+            
+            .service-icon img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <div class="navbar">
+        <div class="right-side">
+            <i class="fa-solid fa-bars menu-icon"></i>
+            <img src="https://khamsat.hsoubcdn.com/assets/images/logo-73045c76e830509d4dbe03ea6172d22f047c708fed5435e93ffd47f80ee5ffa4.png" alt="شعار خمسات">
+        </div>
+        <div class="left-side">
+            <i class="fa-solid fa-search"></i>
+            <i class="fa-solid fa-cart-shopping"></i>
+            <a href="#"><i class="fa-solid fa-right-to-bracket"></i> <span>دخول</span></a>
+            <a href="#"><i class="fa-solid fa-user-plus"></i> <span>حساب جديد</span></a>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="content">
+        <!-- قسم البطل - تم التعديل -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>أكبر سوق عربي للخدمات المصغرة</h1>
+                <p>أنجز أعمالك بسهولة وأمان بأسعار تبدأ من 5$ فقط</p>
+                <form class="search-form">
+                    <input type="text" placeholder="ابحث عن الخدمة...">
+                    <button type="submit">بحث</button>
+                </form>
+                <div class="popular-tags">
+                    <h2>كلمات شائعة:</h2>
+                    <a href="#">تصميم داخلی</a>
+                    <a href="#">وودبريس</a>
+                    <a href="#">هوية بصرية</a>
+                    <a href="#">استشارات قانونية</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم التصنيفات - التصميم الجديد -->
+        <section class="categories">
+            <div class="container">
+                <h2 class="section-title">كافة الخدمات الاحترافية لتطوير أعمالك</h2>
+                <div class="categories-grid">
+                    <!-- المحتوى الأصلي للبطاقات -->
+                    <div class="category-card">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/design-17881dc3ab0928311acc42761ff77c7e9a09e077c326fbc5d373e4fe1b5ad397.jpg" alt="تصميم">
+                        <div class="category-overlay">
+                            <h3>تصميم</h3>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/translate-ad-ad754e21fea72c69a11e1000903e1f848812bc20e3f1033d6e44f15c249dcd61.jpg" alt="كتابة وترجمة">
+                        <div class="category-overlay">
+                            <h3>كتابة وترجمة</h3>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/social-5598c2401b6ca90eda3df7c69c8c4727dcc937f8cc995096456d8a8773f4d324.jpg" alt="تسويق رقمي">
+                        <div class="category-overlay">
+                            <h3>تسويق رقمي</h3>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/development-bb416454cb6338d96f266211eb8d2e10fc669ddb8470ee95eef00c841df903e8.jpg" alt="برمجة وتطوير">
+                        <div class="category-overlay">
+                            <h3>برمجة وتطوير</h3>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/video-9b7fb5a1ae97544b32573e1625c5b12bb86e5fff9abfe4ae5ba7371ea86c41ae.jpg" alt="فيديو وأنيميشن">
+                        <div class="category-overlay">
+                            <h3>فيديو وأنيميشن</h3>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/engineering-3338ff435ee9031dc4736fab60521d51325e8585ab5c5d304a9a6547695d9333.jpg" alt="هندسة وعمارة">
+                        <div class="category-overlay">
+                            <h3>هندسة وعمارة</h3>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/bussiness-2c1f54b0bd848ce232a972323a799f3abe75235eb4f00fb0180d4ede6ac390dd.jpg" alt="أعمال">
+                        <div class="category-overlay">
+                            <h3>أعمال</h3>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/audio-93508fbd03c4ca1a20eabc10ecbf7924161d61e7139878bc93641c310d195e13.jpg" alt="صوتيات">
+                        <div class="category-overlay">
+                            <h3>صوتيات</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الخدمات الشائعة - التصميم الجديد -->
+        <section class="services">
+            <div class="container">
+                <h2 class="section-title">خدمات شائعة</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="https://khamsat.hsoubcdn.com/assets/images/icons/design-9553c8729442bfc3125947b1d251bff8d2688f2d133cbc61b8675f6bcafedb48.png" alt="تصميم شعار">
+                        </div>
+                        <div class="service-info">
+                            <h3>تصميم شعار</h3>
+                            <div class="service-meta">
+                                <span class="service-orders">
+                                    <i class="fas fa-shopping-cart"></i> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="https://khamsat.hsoubcdn.com/assets/images/icons/video-editing-d3772fe22213dc3b1a06add6bed2763ea6361f958b567292390db9f8692693f7.png" alt="مونتاج فيديو">
+                        </div>
+                        <div class="service-info">
+                            <h3>مونتاج فيديو</h3>
+                            <div class="service-meta">
+                                <span class="service-orders">
+                                    <i class="fas fa-shopping-cart"></i> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="https://khamsat.hsoubcdn.com/assets/images/icons/mobile-apps-81621021c7aa618269502f9c4e0c4f9954813e02be78e5e577a04581720330cf.png" alt="تطبيق جوال">
+                        </div>
+                        <div class="service-info">
+                            <h3>تطبيق جوال</h3>
+                            <div class="service-meta">
+                                <span class="service-orders">
+                                    <i class="fas fa-shopping-cart"></i> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="https://khamsat.hsoubcdn.com/assets/images/icons/shopping-b3d58e0c29eb935c74e32fffe00ddcfc2f9983fb1ef4048a581d0475f573196d.png" alt="متجر إلكتروني">
+                        </div>
+                        <div class="service-info">
+                            <h3>متجر إلكتروني</h3>
+                            <div class="service-meta">
+                                <span class="service-orders">
+                                    <i class="fas fa-shopping-cart"></i> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="https://khamsat.hsoubcdn.com/assets/images/icons/motion-graphic-46f37e93fd1b5c2d7f7f9f1dfc933925a0ff39307428de8fab9c8fd9ecf4aa98.png" alt="موشن جرافيك">
+                        </div>
+                        <div class="service-info">
+                            <h3>موشن جرافيك</h3>
+                            <div class="service-meta">
+                                <span class="service-orders">
+                                    <i class="fas fa-shopping-cart"></i> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="https://khamsat.hsoubcdn.com/assets/images/icons/seo-12a60521785d4966fcf7bd73599b60821b81ccc07504e58db4a42a8a3a95d18c.png" alt="تحسين محركات البحث">
+                        </div>
+                        <div class="service-info">
+                            <h3>تحسين محركات البحث</h3>
+                            <div class="service-meta">
+                                <span class="service-orders">
+                                    <i class="fas fa-shopping-cart"></i> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="https://khamsat.hsoubcdn.com/assets/images/icons/translation-0d0cf9d989a923a95f6b16c7170000ccc7a2a5aac3fde8aac5aeafe0116e3bee.png" alt="ترجمة">
+                        </div>
+                        <div class="service-info">
+                            <h3>ترجمة</h3>
+                            <div class="service-meta">
+                                <span class="service-orders">
+                                    <i class="fas fa-shopping-cart"></i> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <img src="https://khamsat.hsoubcdn.com/assets/images/icons/social-d724576ce0d5762317977d94127f48cf82ac70438fc73477c4d2a36d04190e34.png" alt="إدارة وسائل التواصل">
+                        </div>
+                        <div class="service-info">
+                            <h3>إدارة وسائل التواصل</h3>
+                            <div class="service-meta">
+                                <span class="service-orders">
+                                    <i class="fas fa-shopping-cart"></i> 
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم المميزات -->
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title">لماذا خمسات خيارك الأفضل لإنجاز أعمالك</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/icons/more-components-d845a8929c9fcb8afbbc265d479b22ba853c84a063160d7c0c5429ce943c1927.png" alt="photo" width="100" height="100">
+                        <h3>أكثر من 350 تصنيف</h3>
+                        <p>+350 تصنيف تضم آلاف الخدمات في كافة المجالات</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/icons/investment-37b596537a8646a47f89fdfb07c61e95ebfa7ee71dc128af8b964d1dda66c191.png" alt="photo" width="100" height="100">
+                        <h3>أسعار اقتصادية</h3>
+                        <p>خدمات ذات جودة عالية بأسعار تبدأ من 5 $ فقط</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/icons/all-the-time-70cbdad8b7c51b8b9f489e34521c5a18fe802022e888ee5fc248773a3cf46627.png" alt="photo" width="100" height="100">
+                        <h3>خدمة عملاء على مدار الساعة</h3>
+                        <p>فريق محترف للرد على الاستفسارات وحل المشكلات في أسرع وقت</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/icons/trusted-da6861e45dd5f39d1071cb635f7f2eaeb1c1716261ef8bf0a37d75f48b28aec6.svg" alt="photo" width="100" height="100">
+                        <h3>تعاملات آمنة وموثوقة</h3>
+                        <p>يوثق مقدمي الخدمات هوياتهم لتعاملات آمنة وجدية</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/icons/guarantee-9b18c7beaca218cc7619ac4e1994ba9365814672ae869dd6640b73c90963b6ec.svg" alt="photo" width="100" height="100">
+                        <h3>ضمان الحقوق</h3>
+                        <p>يضمن خمسات حقوقك المالية واستلامك العمل كاملاً وفق ما يعرضه البائع</p>
+                    </div>
+                    <div class="feature-item">
+                        <img src="https://khamsat.hsoubcdn.com/assets/images/icons/professional-user-82285abf9b742290bd18e46805d7c3baa0e9424b974dce9faf7a48acc5e6381b.png" alt="photo" width="100" height="100">
+                        <h3>مقدمو خدمات محترفون</h3>
+                        <p>ملفات شخصية تبرز خدمات البائعين وتقييماتهم السابقة</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الخدمات المميزة - التصميم الجديد -->
+        <section class="featured-services">
+            <div class="container">
+                <h2 class="section-title">خدمات مميزة</h2>
+                <div class="featured-services-grid">
+                    <div class="featured-service-card">
+                        <div class="featured-service-image">
+                            <img src="https://khamsat.hsoubcdn.com/images/services/769351/c5a80927f4f472a2bb47d480020bfe37_thumb.jpg" alt="تدقيق لغوي بشكل احترافي">
+                        </div>
+                        <div class="featured-service-content">
+                            <h3 class="featured-service-title">تدقيق لغوي بشكل احترافي</h3>
+                            <p class="featured-service-category">كتابة وترجمة / تدقيق لغوي</p>
+                            <p class="featured-service-price">تبدأ من 5.00$</p>
+                        </div>
+                    </div>
+                    
+                    <div class="featured-service-card">
+                        <div class="featured-service-image">
+                            <img src="https://khamsat.hsoubcdn.com/images/services/616945/40774c81411df6d74eacf9404b4e4674.jpg?s=small" alt="تنسيق متجرك الإلكترونى">
+                        </div>
+                        <div class="featured-service-content">
+                            <h3 class="featured-service-title">تنسيق متجرك الإلكترونى على منصة سلة بإستخدام أكواد الـ CSS</h3>
+                            <p class="featured-service-category">برمجة وتطوير / سلة</p>
+                            <p class="featured-service-price">تبدأ من 10.00$</p>
+                        </div>
+                    </div>
+                    
+                    <div class="featured-service-card">
+                        <div class="featured-service-image">
+                            <img src="https://khamsat.hsoubcdn.com/images/services/2474688/15221024c6202dc077454a8e97dd9802_thumb.jpg" alt="تلخيص كتب عربية">
+                        </div>
+                        <div class="featured-service-content">
+                            <h3 class="featured-service-title">تلخيص كتب عربية وتلخيص مواد العلوم</h3>
+                            <p class="featured-service-category">كتابة وترجمة / خدمات تلخيص</p>
+                            <p class="featured-service-price">تبدأ من 5.00$</p>
+                        </div>
+                    </div>
+                    
+                    <div class="featured-service-card">
+                        <div class="featured-service-image">
+                            <img src="https://khamsat.hsoubcdn.com/images/services/1079878/607000cf2f5eb1579096e05efbec85f1.jpg?s=small" alt="أصمم موقعك أو متجرك الالكتروني">
+                        </div>
+                        <div class="featured-service-content">
+                            <h3 class="featured-service-title">أصمم موقعك أو متجرك الالكتروني باحترافية</h3>
+                            <p class="featured-service-category">برمجة وتطوير / إنشاء موقع ووردبريس</p>
+                            <p class="featured-service-price">تبدأ من 5.00$</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم حلول متكاملة - التصميم الجديد -->
+        <section class="solutions">
+            <div class="container">
+                <h2 class="section-title">حلول متكاملة لتطوير أعمالك</h2>
+                <div class="solutions-grid">
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="solution-title">حوّل أعمالك للعالم الرقمي</h3>
+                        <p class="solution-description">خدمات متكاملة لتحويل أعمالك التقليدية إلى رقمية باحترافية</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <h3 class="solution-title">ابدأ مشروعك التجاري</h3>
+                        <p class="solution-description">أنشئ متجرك الإلكتروني الآن بسهولة وبأسعار مناسبة</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="solution-title">أنشئ موقع إلكتروني لأعمالك</h3>
+                        <p class="solution-description">تصميم وتطوير مواقع ويب احترافية تعبر عن هوية علامتك التجارية</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fab fa-wordpress"></i>
+                        </div>
+                        <h3 class="solution-title">أنشئ موقعك على ووردبريس</h3>
+                        <p class="solution-description">استفد من نظام إدارة المحتوى الأكثر شيوعاً لبناء موقعك</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="solution-title">حلول التسويق الرقمي</h3>
+                        <p class="solution-description">خطط تسويقية متكاملة لتعزيز وجودك الرقمي وجذب العملاء</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="solution-title">أنشئ دورتك التدريبية عبر الإنترنت</h3>
+                        <p class="solution-description">حول معرفتك إلى دورة تدريبية ناجحة تصل للمتعلمين في كل مكان</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3 class="solution-title">انشر كتابك عبر الإنترنت</h3>
+                        <p class="solution-description">خدمات متكاملة لنشر وتوزيع كتابك إلكترونياً وورقياً</p>
+                    </div>
+                    
+                    <div class="solution-card">
+                        <div class="solution-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3 class="solution-title">الاستشارات التسويقية</h3>
+                        <p class="solution-description">احصل على استشارات متخصصة لتطوير استراتيجياتك التسويقية</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الأسئلة الشائعة - تم التطوير -->
+        <section class="faq">
+            <div class="container">
+                <h2 class="section-title">الأسئلة الشائعة</h2>
+                <div class="faq-grid">
+                    <div class="faq-column">
+                        <div class="faq-item">
+                            <input type="checkbox" id="faq1">
+                            <label class="faq-question" for="faq1">ما هو خمسات؟</label>
+                            <div class="faq-answer">
+                                <p>خمسات هو أكبر سوق عربي لبيع وشراء الخدمات المصغرة. يجمع خمسات بين الشباب العربي الموهوب المستعد لتقديم خبراته ومهاراته على شكل خدمات مصغرة بأسعار تبدأ من 5 دولار، وبين الأفراد ورواد الأعمال الذين يحتاجون هذه الخدمات لتساعدهم في تنمية وتطوير أعمالهم.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <input type="checkbox" id="faq2">
+                            <label class="faq-question" for="faq2">كيف يمكن أن أستفيد من خمسات?</label>
+                            <div class="faq-answer">
+                                <p>قد يتوقف إطلاق شركتك على تصميم شعار، أو يتوقف عملك بسبب الحاجة لمحتوى متجدد لموقعك، ربما تملك فكرة رائعة لبرنامج أو تطبيق ولكن ليست لديك أدنى فكرة عن البرمجة والتطوير، لديك بحث دراسي أو ترجمة مطلوبة في وقت معين وتحتاج لمن يساعدك فيها.</p>
+                                <p>يوفّر خمسات كل الخدمات الإبداعية والاحترافية التي تحتاجها لتنمية وتطوير أعمالك، والتي يمكن طلبها من أشخاص موهوبين مستعدين لخدمتك في إنجاز مهامك بسهولة عبر الإنترنت وبأسعار اقتصادية تتناسب مع الأفراد ورواد الأعمال من أصحاب المشاريع الناشئة.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <input type="checkbox" id="faq3">
+                            <label class="faq-question" for="faq3">كيف يضمن موقع خمسات حقوقي?</label>
+                            <div class="faq-answer">
+                                <p>موقع خمسات يضمن لك حقوقك بشكل كامل، كن مطمئنا عند شراء أي خدمة معроضة في الموقع، يقوم خمسات بدور الوسيط بين المشتري والبائع ويحمي حقوق الطرفين المالية في حال الالتزام بشروط موقع خمسات وبنود الضمان والإبقاء على جميع التواصلات داخل الموقع.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-column">
+                        <div class="faq-item">
+                            <input type="checkbox" id="faq4">
+                            <label class="faq-question" for="faq4">كيف أبدأ في بيع الخدمات على خمسات?</label>
+                            <div class="faq-answer">
+                                <p>لبدء بيع الخدمات على خمسات، يجب عليك أولاً إنشاء حساب ثم تفعيله. بعد ذلك يمكنك إنشاء خدمتك الخاصة من خلال تحديد المجال الذي تتقنه، وتحديد السعر المناسب، وإضافة وصف واضح للخدمة مع صور توضيحية. بعد الموافقة على خدمتك من قبل إدارة الموقع، سيتم نشرها ويمكن للعملاء开始 شراؤها.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <input type="checkbox" id="faq5">
+                            <label class="faq-question" for="faq5">ما هي طرق الدفع المتاحة على خمسات?</label>
+                            <div class="faq-answer">
+                                <p>يوفّر خمسات عدة طرق دفع متنوعة تناسب مختلف العملاء، تشمل:</p>
+                                <ul>
+                                    <li>البطاقات الائتمانية (Visa, MasterCard)</li>
+                                    <li>PayPal</li>
+                                    <li>حسابات البنوك المحلية</li>
+                                    <li>محافظ رقمية أخرى</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <input type="checkbox" id="faq6">
+                            <label class="faq-question" for="faq6">كيف يمكنني التواصل مع البائع?</label>
+                            <div class="faq-answer">
+                                <p>يمكنك التواصل مع البائع مباشرة من خلال صفحة الخدمة عن طريق زر "التواصل مع البائع". يحافظ خمسات على جميع سجلات المحادثات بين المشتري والبائع لحماية حقوق الطرفين. ننصح بعدم التواصل خارج منصة خمسات للحفاظ على حقوقك.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- التذييل -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>موقع خمسات</h4>
+                    <ul>
+                        <li><a href="#">حول خمسات</a></li>
+                        <li><a href="#">كيف يعمل الموقع</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">ضمان الحقوق</a></li>
+                        <li><a href="#">البيع على خمسات</a></li>
+                        <li><a href="#">مركز المساعدة</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>مجتمع خمسات</h4>
+                    <ul>
+                        <li><a href="#">نماذج أعمال قمت بتنفيذها</a></li>
+                        <li><a href="#">طلبات الخدمات غير الموجودة</a></li>
+                        <li><a href="#">تجارب وقصص المستخدمين</a></li>
+                        <li><a href="#">أمور عامة حول خمسات</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>تابعنا</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 خمسات. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

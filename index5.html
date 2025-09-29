@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rofa Market</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        
+        /* شريط التنقل */
+        nav {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 18px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover {
+            background-color: #3498db;
+        }
+        
+        /* رأس الصفحة */
+        header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* قسم المنتجات */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .product {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #f1f1f1;
+        }
+        
+        .product-info {
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .product-title {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        
+        /* صفحات أخرى */
+        .page {
+            display: none;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            margin: 30px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .page h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            font-size: 28px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f1f1f1;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .form-group input, 
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        /* صفحة نجاح الشراء */
+        .success {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+        
+        /* الأسئلة الشائعة */
+        .faq {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 15px;
+            background: #f8f9fa;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+            position: relative;
+        }
+        
+        .faq-question:after {
+            content: '+';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+        }
+        
+        .faq-answer {
+            padding: 15px;
+            display: none;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 25px 0;
+            margin-top: 50px;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+            
+            .products {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav>
+        <div class="container">
+            <a href="#" onclick="showPage('home')">الصفحة الرئيسية</a>
+            <a href="#" onclick="showPage('help')">المساعدة</a>
+            <a href="#" onclick="showPage('contact')">التواصل</a>
+        </div>
+    </nav>
+
+    <!-- الصفحة الرئيسية -->
+    <header>
+        <div class="container">
+            <h1>Rofa Market</h1>
+            <p>اكتشف مجموعة منتجاتنا المميزة بأفضل الأسعار</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- الصفحة الرئيسية -->
+        <div id="home" class="page">
+            <h2>منتجاتنا المميزة</h2>
+            <div class="products">
+                <!-- منتجات إلكترونية -->
+               
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="كاميرا رقمية">
+                    <div class="product-info">
+                        <h3 class="product-title">كاميرا رقمية</h3>
+                        <p class="product-price">2200 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('كاميرا رقمية', 2200, 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'كاميرا رقمية عالية الدقة مع عدسة متطورة تمكنك من التقاط صور رائعة بدقة 24 ميجابكسل. تحتوي على خاصية التصوير المتواصل وتصوير الفيديو بدقة 4K.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="لابتوب">
+                    <div class="product-info">
+                        <h3 class="product-title">لابتوب فائق السرعة</h3>
+                        <p class="product-price">12500 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('لابتوب فائق السرعة', 12500, 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'لابتوب بأحدث معالج من الجيل العاشر، بطاقة رسومات مخصصة، ومساحة تخزين SSD سريعة. شاشة 15.6 بوصة بدقة Full HD، مثالي للألعاب والمهام الثقيلة.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="هاتف ذكي">
+                    <div class="product-info">
+                        <h3 class="product-title">هاتف ذكي</h3>
+                        <p class="product-price">5800 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('هاتف ذكي', 5800, 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'هاتف ذكي بشاشة 6.5 بوصة، كاميرا خلفية رباعية بدقة 48 ميجابكسل، معالج سريع، وبطارية تدوم ليوم كامل. يتضمن خاصية الشحن السريع ومقاوم للماء والغبار.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="سماعات رأس">
+                    <div class="product-info">
+                        <h3 class="product-title">سماعات رأس</h3>
+                        <p class="product-price">650 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('سماعات رأس', 650, 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'سماعات رأس مريحة مع عزل صوتي ممتاز وجودة صوت عالية. مثالية للاستماع إلى الموسيقى، الألعاب، أو المكالمات. قابلة للطي وتأتي بحافظة للحماية.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="سماعات لاسلكية">
+                    <div class="product-info">
+                        <h3 class="product-title">ساعة ذكية</h3>
+                        <p class="product-price">1800 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('ساعة ذكية', 1800, 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'ساعة ذكية متطورة مع شاشة لمس، مقاومة للماء، تتبع اللياقة البدنية، إشعارات الهاتف، وتتبع النوم. بطاريتها تدوم حتى يومين بشحنة واحدة.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="حذاء رياضي">
+                    <div class="product-info">
+                        <h3 class="product-title">حذاء رياضي</h3>
+                        <p class="product-price">850 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('حذاء رياضي', 850, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'حذاء رياضي مريح ومتين، مصمم لتوفير الدعم اللقدم أثناء ممارسة الرياضة. مصنوع من مواد عالية الجودة مع نعل مضاد للانزلاق.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="حذاء رياضة">
+                    <div class="product-info">
+                        <h3 class="product-title">حذاء رياضة</h3>
+                        <p class="product-price">720 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('حذاء رياضة', 720, 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'حذاء رياضي خفيف الوزن مع تصميم عصري وألوان جذابة. يوفر الراحة والدعم خلال الأنشطة الرياضية المختلفة.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+
+                <!-- المنتجات الإضافية -->
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="لوحة مفاتيح">
+                    <div class="product-info">
+                        <h3 class="product-title">لوحة مفاتيح ميكانيكية</h3>
+                        <p class="product-price">800 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('لوحة مفاتيح ميكانيكية', 800, 'https://images.unsplash.com/photo-1541140532154-b024d705b90a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'لوحة مفاتيح ميكانيكية بمفاتيح RGB قابلة للتخصيص، تصميم مريح للكتابة لفترات طويلة، ومقاومة للانسكابات. مثالية للاعبين والمبرمجين.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="ماوس">
+                    <div class="product-info">
+                        <h3 class="product-title">ماوس ألعاب</h3>
+                        <p class="product-price">450 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('ماوس ألعاب', 450, 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'ماوس ألعاب بدقة عالية، أزرار قابلة للبرمجة، إضاءة RGB، وتصميم مريح يناسب جميع أحجام الأيدي. مناسب للألعاب والاستخدام اليومي.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="شاشة">
+                    <div class="product-info">
+                        <h3 class="product-title">شاشة 24 بوصة</h3>
+                        <p class="product-price">2400 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('شاشة 24 بوصة', 2400, 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'شاشة كمبيوتر 24 بوصة بدقة Full HD، زاوية مشاهدة واسعة، وقت استجابة سريع، وتصميم بدون إطارات. مناسبة للأعمال والألعاب.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="سماعات">
+                    <div class="product-info">
+                        <h3 class="product-title">سماعات ستريو</h3>
+                        <p class="product-price">1200 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('سماعات ستريو', 1200, 'https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'نظام سماعات ستريو بقوة 40 وات، صوت غني واضح، توصيل بلوتوث ومداخل AUX متعددة. مثالية للاستماع إلى الموسيقى ومشاهدة الأفلام.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="data:image/jpeg;base64,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" alt="كاميرا كانون" width="50" height="50">
+                    <div class="product-info">
+                        <h3 class="product-title">كاميرا كانون</h3>
+                        <p class="product-price">3800 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('كاميرا كانون', 3800, 'data:image/jpeg;base64,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', 'كاميرا كانون DSLR مع عدسة 18-55mm، مثالية للمصورين المبتدئين والمحترفين. تقدم صورًا بدقة عالية وفيديو 1080p.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="طابعة">
+                    <div class="product-info">
+                        <h3 class="product-title">طابعة ليزر</h3>
+                        <p class="product-price">1600 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('طابعة ليزر', 1600, 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'طابعة ليزر أحادية اللون عالية السرعة، توفر وثائق واضحة وحادة. مناسبة للمكاتب المنزلية والمكاتب الصغيرة.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="data:image/webp;base64,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" alt="هارد ديسك">>
+                    <div class="product-info">
+                        <h3 class="product-title">هارد ديسك خارجي</h3>
+                        <p class="product-price">1100 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('هارد ديسك خارجي', 1100, 'data:image/webp;base64,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', 'هارد ديسك خارجي سعة 1 تيرا بايت، سريع النقل، صغير الحجم، ومقاوم للصدمات. مثالي لنقل وتخزين الملفات.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+                
+                <div class="product">
+                    <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="مايكروفون">
+                    <div class="product-info">
+                        <h3 class="product-title">مايكروفون احترافي</h3>
+                        <p class="product-price">950 ج.م</p>
+                        <a href="#" class="btn" onclick="showProductDetails('مايكروفون احترافي', 950, 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80', 'مايكروفون احترافي مع حامل، كابل، ومنفذ USB. يلتقط الصوت بوضوح مع تقليل الضوضاء المحيطة. مثالي للبث المباشر والتسجيل.')">تفاصيل المنتج</a>
+                    </div>
+                </div>
+
+
+                  
+                    </div>
+                    </div>
+                        
+                    
+                </div>
+                        
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة تفاصيل المنتج -->
+        <div id="product-details" class="page">
+            <h2>تفاصيل المنتج</h2>
+            <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+                <div style="flex: 1; min-width: 300px;">
+                    <img id="detail-image" src="" alt="صورة المنتج" style="width: 100%; border-radius: 10px;">
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <h3 id="detail-title" style="margin-bottom: 15px; color: #2c3e50;"></h3>
+                    <p id="detail-description" style="margin-bottom: 20px; line-height: 1.8;"></p>
+                    <p id="detail-price" style="font-size: 24px; color: #e74c3c; margin-bottom: 20px;"></p>
+                    
+                    <div class="form-group">
+                        <label for="quantity">الكمية:</label>
+                        <input type="number" id="quantity" value="1" min="1" style="max-width: 100px;">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="color">اللون:</label>
+                        <select id="color">
+                            <option>أسود</option>
+                            <option>أبيض</option>
+                            <option>أزرق</option>
+                            <option>أحمر</option>
+                        </select>
+                    </div>
+                    
+                    <a href="#" class="btn" onclick="showPage('create-account')">شراء المنتج</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة إنشاء حساب -->
+        <div id="create-account" class="page">
+            <h2>إنشاء حساب جديد</h2>
+            <form style="max-width: 500px; margin: 0 auto;">
+                <div class="form-group">
+                    <label for="name">الاسم بالكامل:</label>
+                    <input type="text" id="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني:</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">كلمة المرور:</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm-password">تأكيد كلمة المرور:</label>
+                    <input type="password" id="confirm-password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">رقم الهاتف:</label>
+                    <input type="tel" id="phone">
+                </div>
+                
+                <button type="button" class="btn" style="width: 100%;" onclick="showPage('login')">إنشاء حساب</button>
+            </form>
+        </div>
+
+        <!-- صفحة تسجيل الدخول -->
+        <div id="login" class="page">
+            <h2>تسجيل الدخول</h2>
+            <form style="max-width: 500px; margin: 0 auto;">
+                <div class="form-group">
+                    <label for="login-email">البريد الإلكتروني:</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">كلمة المرور:</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                
+                <button type="button" class="btn" style="width: 100%;" onclick="showPage('review')">تسجيل الدخول</button>
+            </form>
+        </div>
+
+        <!-- صفحة مراجعة الشراء -->
+        <div id="review" class="page">
+            <h2>مراجعة الشراء</h2>
+            <div style="max-width: 600px; margin: 0 auto; background: #f8f9fa; padding: 20px; border-radius: 10px;">
+                <h3 style="margin-bottom: 15px; color: #2c3e50;">تفاصيل الطلب</h3>
+                <p style="margin-bottom: 10px;"><strong>المنتج:</strong> <span id="review-product-name"></span></p>
+                <p style="margin-bottom: 10px;"><strong>اللون:</strong> <span id="review-color">أسود</span></p>
+                <p style="margin-bottom: 10px;"><strong>الكمية:</strong> <span id="review-quantity">1</span></p>
+                <p style="margin-bottom: 20px;"><strong>السعر الإجمالي:</strong> <span id="review-total-price"></span> ج.م</p>
+                
+                <p style="margin-bottom: 20px; padding: 15px; background: white; border-radius: 5px;">سيتم شحن طلبك خلال 2-3 أيام عمل إلى عنوانك المسجل.</p>
+                
+                <a href="#" class="btn" style="width: 100%; text-align: center;" onclick="showPage('success')">تأكيد الشراء</a>
+            </div>
+        </div>
+
+        <!-- صفحة نجاح الشراء -->
+        <div id="success" class="page">
+            <div class="success">
+                <div class="success-icon">✓</div>
+                <h2>شكراً لشرائك من متجرنا!</h2>
+                <p style="margin-bottom: 20px;">تم تأكيد طلبك بنجاح وسيتم شحنه في أقرب وقت ممكن.</p>
+                <p style="margin-bottom: 30px;">رقم الطلب: #<span id="order-number"></span></p>
+                <a href="#" class="btn" onclick="showPage('home')">العودة إلى الصفحة الرئيسية</a>
+            </div>
+        </div>
+
+        <!-- صفحة المساعدة -->
+        <div id="help" class="page">
+            <h2>الأسئلة الشائعة</h2>
+            
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">كيف يمكنني الطلب من المتجر؟</div>
+                <div class="faq-answer">
+                    <p>يمكنك الطلب عن طريق اختيار المنتج الذي ترغب في شرائه ثم النقر على زر "تفاصيل المنتج" ثم متابعة خطوات الشراء.</p>
+                </div>
+            </div>
+            
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">ما هي طرق الدفع المتاحة؟</div>
+                <div class="faq-answer">
+                    <p>نحن نقبل الدفع نقداً عند الاستلام أو عن طريق البطاقات الائتمانية أو المحافظ الإلكترونية.</p>
+                </div>
+            </div>
+            
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">كم تستغرق مدة التوصيل؟</div>
+                <div class="faq-answer">
+                    <p>مدة التوصيل تتراوح بين 2-5 أيام عمل حسب موقعك.</p>
+                </div>
+            </div>
+            
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">هل يمكنني إرجاع المنتج؟</div>
+                <div class="faq-answer">
+                    <p>نعم، يمكنك إرجاع المنتج خلال 14 يومًا من استلامه بشرط أن يكون بحالته الأصلية.</p>
+                </div>
+            </div>
+            
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">كيف يمكنني التواصل مع خدمة العملاء؟</div>
+                <div class="faq-answer">
+                    <p>يمكنك التواصل معنا عبر نموذج التواصل في صفحة "التواصل" أو عبر البريد الإلكتروني support@rofamarket.com</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">هل المنتجات أصلية وذات جودة عالية؟</div>
+                <div class="faq-answer">
+                    <p>نعم، جميع منتجاتنا أصلية وذات جودة عالية. نحن نتعامل فقط مع موردين معتمدين وموثوقين.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">ما هي سياسة الإرجاع والاستبدال؟</div>
+                <div class="faq-answer">
+                    <p>يمكنك إرجاع أو استبدال المنتج خلال 14 يومًا من الاستلام بشرط أن يكون المنتج بحالته الأصلية وبالعبوة الأصلية.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">هل تقدمون خدمة التوصيل السريع؟</div>
+                <div class="faq-answer">
+                    <p>نعم، نوفر خدمة التوصيل السريع في بعض المناطق برسوم إضافية. يمكنك التحقق من توفر هذه الخدمة في منطقتك أثناء عملية الشراء.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">كيف يمكنني تتبع طلبي؟</div>
+                <div class="faq-answer">
+                    <p>بعد تأكيد طلبك، سنرسل لك رسالة بريد إلكتروني تحتوي على رقم التتبع ورابط لتتبع شحن طلبك.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">هل أسعار المنتجات تشمل الضريبة؟</div>
+                <div class="faq-answer">
+                    <p>نعم، جميع الأسعار المعروضة تشمل الضريبة.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">ما هي مدة الضمان على المنتجات الإلكترونية؟</div>
+                <div class="faq-answer">
+                    <p>جميع المنتجات الإلكترونية تأتي بضمان لمدة عام واحد من تاريخ الشراء.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">هل يمكنني تعديل طلبي بعد التأكيد؟</div>
+                <div class="faq-answer">
+                    <p>نعم، يمكنك تعديل طلبك خلال ساعة من تأكيده. بعد هذه المدة، يبدأ فريقنا في تجهيز الطلب ولا يمكن تعديله.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">هل تقدمون خصومات للكميات الكبيرة؟</div>
+                <div class="faq-answer">
+                    <p>نعم، نقدم خصومات خاصة للطلبات الكبيرة والجملة. يرجى التواصل معنا عبر البريد الإلكتروني للتفاصيل.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">ما هي أوقات عمل خدمة العملاء؟</div>
+                <div class="faq-answer">
+                    <p>خدمة العملاء متاحة من الساعة 9 صباحاً حتى 10 مساءً طوال أيام الأسبوع.</p>
+                </div>
+            </div>
+
+            <div class="faq">
+                <div class="faq-question" onclick="toggleAnswer(this)">هل يمكنني الشراء كهدية؟</div>
+                <div class="faq-answer">
+                    <p>نعم، يمكنك إضافة ملاحظة أثناء عملية الشراء لطلب تغليف المنتج كهدية. تتوفر هذه الخدمة برسوم إضافية.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- صفحة التواصل -->
+        <div id="contact" class="page">
+            <h2>تواصل معنا</h2>
+            
+            <form style="max-width: 600px; margin: 0 auto;">
+                <div class="form-group">
+                    <label for="contact-name">الاسم:</label>
+                    <input type="text" id="contact-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-email">البريد الإلكتروني:</label>
+                    <input type="email" id="contact-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-phone">رقم الهاتف:</label>
+                    <input type="tel" id="contact-phone">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-message">الرسالة:</label>
+                    <textarea id="contact-message" rows="5" required></textarea>
+                </div>
+                
+                <button type="button" class="btn" style="width: 100%;">إرسال الرسالة</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2023 Rofa Market. جميع الحقوق محفوظة.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // إظهار الصفحة المحددة وإخفاء الأخرى
+        function showPage(pageId) {
+            // إخفاء جميع الصفحات
+            var pages = document.querySelectorAll('.page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].style.display = 'none';
+            }
+            
+            // إظهار الصفحة المطلوبة
+            document.getElementById(pageId).style.display = 'block';
+            
+            // إذا كانت صفحة المراجعة، قم بتحديث التفاصيل
+            if (pageId === 'review') {
+                updateReviewDetails();
+            }
+            
+            // إذا كانت صفحة النجاح، قم بإنشاء رقم طلب عشوائي
+            if (pageId === 'success') {
+                document.getElementById('order-number').textContent = Math.floor(Math.random() * 10000);
+            }
+            
+            // التمرير إلى الأعلى
+            window.scrollTo(0, 0);
+        }
+        
+        // عرض تفاصيل المنتج
+        function showProductDetails(name, price, image, description) {
+            document.getElementById('detail-title').textContent = name;
+            document.getElementById('detail-price').textContent = 'السعر: ' + price + ' ج.م';
+            document.getElementById('detail-image').src = image;
+            document.getElementById('detail-image').alt = name;
+            document.getElementById('detail-description').textContent = description;
+            
+            // حفظ بيانات المنتج للاستخدام لاحقاً
+            sessionStorage.setItem('productName', name);
+            sessionStorage.setItem('productPrice', price);
+            
+            showPage('product-details');
+        }
+        
+        // تحديث تفاصيل المراجعة
+        function updateReviewDetails() {
+            var productName = sessionStorage.getItem('productName');
+            var productPrice = sessionStorage.getItem('productPrice');
+            var quantity = document.getElementById('quantity').value;
+            var color = document.getElementById('color').value;
+            var totalPrice = productPrice * quantity;
+            
+            document.getElementById('review-product-name').textContent = productName;
+            document.getElementById('review-color').textContent = color;
+            document.getElementById('review-quantity').textContent = quantity;
+            document.getElementById('review-total-price').textContent = totalPrice;
+        }
+        
+        // تبديل عرض إجابة الأسئلة
+        function toggleAnswer(element) {
+            var answer = element.nextElementSibling;
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+            } else {
+                answer.style.display = 'block';
+            }
+        }
+        
+        // عند تحميل الصفحة، إظهار الصفحة الرئيسية
+        window.onload = function() {
+            showPage('home');
+        };
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,613 @@
+body {
+  font-family: 'Cairo', sans-serif;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.top {
+  background-color: #444;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 65px;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.top-left {
+  display: flex;
+  gap: 15px;
+}
+
+.top-left a {
+  font-size: 13px;
+  font-weight: 400;
+  color: white;
+  text-decoration: none;
+  border: 1px solid aliceblue;
+  padding: 8px 16px;
+  border-radius: 3px;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.top-left a:hover {
+  background-color: white;
+  color: #444;
+}
+
+.top-left i {
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: aliceblue;
+}
+
+.top-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 20px;
+}
+
+.top-right img {
+  height: 40px; /* مكبر الشعار */
+  width: auto;
+}
+
+.top-right i.fa-bars {
+  font-size: 20px; /* أيقونة القائمة أصغر */
+  cursor: pointer;
+  color: white;
+  padding: 7px;
+  
+}
+
+.top-right a {
+  color: aliceblue;
+  text-decoration: none;
+  font-size: 18px;
+  padding: 6px 15px;
+}
+
+/* Hero Section */
+.container {
+  margin-top: 60px; /* عشان الهيدر الثابت */
+  background-image: url("https://khamsat.hsoubcdn.com/assets/images/hero-33cc6eb8f1a98f8aacf154a4ff4c5f76d5610553e8ba4accb6d22515a64a184a.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 600px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.container {
+  margin-top: 60px; /* عشان الهيدر الثابت */
+  background-image: url("https://khamsat.hsoubcdn.com/assets/images/hero-33cc6eb8f1a98f8aacf154a4ff4c5f76d5610553e8ba4accb6d22515a64a184a.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 600px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 👈 يخلي النصوص تطلع فوق */
+  align-items: center;
+  text-align: center;
+  padding-top: 80px; /* مسافة من فوق عشان ما يلتصقوش بالهيدر */
+}
+
+.container h1 {
+  font-family: "Noto Kufi Arabic", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 50px;
+  color: #333;
+  margin-bottom: 20px;
+  line-height: 1.6;
+  font-weight: 370; /* وزن مناسب */
+}
+
+.container p {
+  font-size: 18px;
+  color: #545454;
+  max-width: 700px;
+}
+.search-section {
+  margin-top: 30px;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: row-reverse; /* يخلي الزر على الشمال */
+  justify-content: center;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  overflow: hidden;
+  background: #fff; /* خلفية بيضاء للصندوق */
+}
+
+input {
+  flex: 1; /* يخلي الصندوق ياخد المساحة الباقية */
+  height: 55px;
+  width: 600px;
+  padding: 10px 15px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  text-align: right; /* النص يبدأ من اليمين */
+}
+
+button {
+  width: 80px;
+  height: 55px;
+  background-color: #28a745; /* أخضر */
+  color: #fff;              /* النص أبيض */
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #218838; /* أخضر غامق */
+}
+.keywords {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #333;
+  text-align: right;   /* يخلي الكلام كله يبدأ من اليمين */
+  direction: rtl;      /* يظبط الكتابة بالعربي */
+}
+
+.keywords .tag { display: inline-block; background: #fff; border: 1px solid #ccc; padding: 6px 12px; margin: 5px; border-radius: 4px; font-size: 14px; cursor: pointer; } 
+.keywords .tag:hover { background: #f1f1f1;}
+
+
+
+.categories {
+  background-color: #fff;   /* أبيض للقسم ده */
+  padding: 40px 60px;       /* مسافة داخلية حول الكروت */
+  border-radius: 0;         /* خليها مستطيلة كاملة */
+  margin: 0;                /* شيل أي مسافات حوالين القسم */
+}
+.container2{
+  background-color: white;
+}
+
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 أعمدة */
+  gap: 20px; /* مسافات بين الكروت */
+}
+
+.category-card {
+  position: relative;
+  height: 200px;
+  border-radius: 1px;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin: 0;       /* شيل المارجن */
+  padding: 0;      /* شيل البادينج */
+}
+
+.section-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color:#333;
+            text-align: center;
+        }
+       
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .category-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .category-overlay h3 {
+            font-size: 22px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            padding: 0 10px;
+        }
+     .services {
+  padding: 40px 0;
+  background: white;
+  margin-bottom: 40px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 كروت في الصف */
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.service-card {
+  display: flex;
+  flex-direction: row-reverse; /* الأيقونة يمين والكلمة شمال */
+  align-items: center;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 15px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 1px solid #ddd;
+  height: 80px;
+  gap: 7px;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  gap: 8px;
+}
+
+.service-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px; /* فاصل بين الرمز والكلمة */
+  flex-shrink: 0;
+  gap: 5px;
+}
+
+.service-icon img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  gap: 5px;
+}
+
+.service-info {
+  flex: 1;
+  text-align: right;
+  gap: 5px;
+}
+
+.service-info h3 {
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* شيلنا السلة (service-meta و service-orders) */
+.service-meta {
+  display: none;
+  gap: 5px;
+}
+
+.container3 {
+  background-color: #eceaea;
+  padding: 30px 50px;
+}
+container4{ background-color: white; text-align: right;direction: rtl; } 
+.name h3{ text-align: center; height: 50px; font-size: 30px; font-weight: 200; } 
+.list{margin: 13px;}
+.list p{ color: #545454; margin-right: 8px; text-align: right;} 
+.list h3{ font-weight: 200; font-size: 23px; padding: 5px; margin-top: 8px; font-family: "Noto Kufi Arabic", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"; text-align: right;} 
+
+.list h3 i {
+  color: green;           /* اللون الأخضر */
+  font-size: 20px; 
+  text-align: right; 
+  padding: 5px;      /* حجم مناسب */
+}
+.container5{
+  background-color: #f9f7f7;
+  margin-top: 100px;
+}
+/* قسم المميزات */
+        .features {
+            padding: 40px 0;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            text-align: center;
+           
+
+        }
+      
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-item img {
+            margin-bottom: 15px;
+        }
+        
+        .feature-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .feature-item p {
+            color: #666;
+            font-size: 14px;
+        }
+        .section-title2 h2 {
+         text-align: center;
+         justify-content: center;
+         font-weight: 200;   /* خليها أثقل شوية */
+         font-size: 30px;    /* كبر حجم الخط */
+         padding: 10px;
+         margin-bottom: 20px; /* مسافة تحت النص */
+         }
+         .name3{
+          text-align: right;
+          font-size: 25px;
+          margin-right: 13px;
+         }
+ .icon2 {
+  background-color: white;
+  border: 1px solid rgb(109, 165, 109);
+  color: rgb(169, 220, 93);
+  text-align: center;
+  margin-bottom: 30px;
+
+  width: 95px;      
+  height: 35px;     
+  display: flex;     
+  justify-content: center; 
+  align-items: center;     
+
+  margin-left: 40px;   /* مسافة من الشمال */
+  margin-top: -40px; 
+  font-weight: 300;  /* يخلي العنصر يطلع لفوق */
+}
+.list3 {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 40px; /* مسافة يمين وشمال */
+}
+
+.list3 .card {
+    width: 23%; /* 4 جنب بعض */
+    box-sizing: border-box;
+}
+
+.list3 img {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 8px; /* نخلي الكلام أقرب للصورة */
+}
+
+.list3 h4 {
+    font-size: 16px;
+    margin: 5px 0;
+    font-weight: 200; /* يقلل المسافة */
+}
+
+.list3 p {
+    margin: 3px 0; /* الكلام متقارب */
+    font-size: 14px;
+    color: #444;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0; /* مسافة صغيرة */
+}
+
+.rating .fa-star {
+    color: gold; /* النجوم صفراء */
+}
+
+.rating .number {
+    margin-left: 5px;
+    font-weight: bold;
+}
+.container7 {
+  background-color: #e3e1e1;
+  padding: 50px 30px; /* مسافة فوق وتحت ويمين وشمال */
+  margin-top: 70px;
+}
+
+.name5 {
+  text-align: center;
+  font-weight: 250;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+.list4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* أصغر */
+  gap: 12px; /* فواصل أصغر */
+  justify-content: start;
+  direction: rtl;
+}
+
+.list4 div {
+  background: #fff;
+  padding: 10px; /* أصغر */
+  border-radius: 6px;
+  text-align: center;
+  font-size: 12px; /* خط أصغر */
+  font-weight: 300;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.list4 div:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+ :root{
+    --khamsat-blue: #007bff; /* لون شبيه */
+    --max-width: 1100px;
+  }
+
+  /* اجعل اتجاه الصفحة مناسب للعربية */
+  .faq-section {
+    direction: rtl;
+    background: #fff;
+    padding: 48px 16px;
+    font-family: "Helvetica Neue", Arial, "Noto Sans Arabic", Tahoma, sans-serif;
+  }
+
+.container8 {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  direction: rtl; /* النص يبدأ من اليمين */
+}
+
+.section-title5 {
+  text-align: center; /* العنوان في النص */
+  font-size: 32px;
+  margin: 40px 0 30px;
+  color: #353637;
+  font-weight: 700;
+  width: 100%;
+}
+
+.faq-grid3 {
+  display: block; /* عمود واحد */
+  width: 100%;
+  max-width: 900px; /* تحديد عرض مناسب */
+  margin: 0 auto; /* توسيط العمود */
+}
+
+.faq-item {
+  border-bottom: 1px solid #6d6f72;
+  width: 100%;
+}
+
+.faq-item input[type="checkbox"] {
+  display: none;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between; /* يخلي السؤال يمين والسهم شمال */
+  align-items: center;
+  padding: 20px 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 18px;
+  transition: all 0.3s;
+  color: #2d3748;
+}
+
+.faq-question:hover {
+  color: #2cc784;
+}
+
+.faq-question::after {
+  content: '\f078'; /* السهم */
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 14px;
+  color: #888;
+  transition: transform 0.3s;
+  margin-right: auto; /* يخلي السهم يروح على الشمال */
+}
+
+.faq-item input[type="checkbox"]:checked + .faq-question::after {
+  transform: rotate(180deg);
+  color: #3a3b3e;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.faq-item input[type="checkbox"]:checked ~ .faq-answer {
+  max-height: 500px;
+}
+
+.faq-answer p,
+.faq-answer ul {
+  padding: 10px 0 20px;
+  line-height: 1.8;
+  color: #555;
+}
+
+.container9 {
+  width: 100%;            
+  background-color: #515050;  /* الشريط الرمادي */
+  padding: 30px 30px;           /* مسافة فوق وتحت فقط */
+  text-align: center;
+  color: #fff;
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+.name6 {
+  font-size: 24px;
+  font-weight: 300;
+  margin-bottom: 15px;
+}
+.form4 form{
+  background-color: #28a745;
+  width: 100px;
+  height: 40px;
+  border: 1px solid rgb(68, 141, 68);
+}
+
+
+
+
+
