@@ -1,0 +1,1294 @@
+<!DOCTYPE html>  
+<html lang="en" dir="ltr">    
+<head>    
+<meta charset="UTF-8">    
+<meta name="viewport" content="width=device-width, initial-scale=1.0">    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">    
+<style>
+  /* General Styles /
+body {
+font-family: Arial, sans-serif;
+background-color: #f0f2f5;
+margin: 0;
+padding: 0;
+direction: ltr; / Left-to-right text direction */
+
+/* Header Section */
+.header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: #fff;
+padding: 10px 20px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+position: sticky;
+top: 0;
+z-index: 1000;
+}
+
+.header-left {
+display: flex;
+align-items: center;
+gap: 15px;
+}
+
+.fb-logo i {
+font-size: 40px;
+color: #0866ff;
+}
+
+.search-bar {
+padding: 8px 15px;
+border: none;
+background-color: #FFFFFF;
+border-radius: 20px;
+width: 250px;
+}
+
+.header-center {
+display: flex;
+gap: 5px;
+}
+
+.center-icon-container {
+padding: 10px 15px;
+transition: all 0.1s ease-in-out;
+border-bottom: 1px solid transparent;
+cursor: pointer;
+}
+  
+.header-center input[type="radio"] {
+  display: none;
+}
+
+
+.header-center .center-icon-container {
+  position: relative; 
+}
+
+.center-icon-container .icon-label {
+  position: absolute;
+  bottom: -36px;            
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  background: #333;
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 10;
+  pointer-events: none; 
+  transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.2s ease;
+}
+
+.header-center input[type="radio"]:checked + label .icon-label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-4px); 
+}
+
+.header-center input[type="radio"]:checked + label i {
+  transform: scale(1.06);
+  transition: transform 0.15s ease;
+}
+  
+
+
+.center-icon-container .icon-label { z-index: 1000; }
+.center-icon-container:hover {
+background-color: #f0f2f5;
+border-radius: 1px 2px 0 0;
+}
+
+.center-icon-container i {
+font-size: 20px;
+color: #65676b;
+}
+
+.center-icon-container:first-child {
+border-bottom: 3px solid #FFFFFF;
+}
+
+.center-icon-container:first-child i {
+color: #7E7878;
+}
+
+
+.header-right {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.right-icon-container {
+background-color: #e4e6eb;
+border-radius: 50%;
+width: 40px;
+height: 40px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: background-color 0.2s;
+}
+
+.header-right input[type="radio"] {
+  display: none;
+}
+
+
+.header-right .right-icon-container {
+  position: relative; 
+}
+
+
+.header-right .right-icon-container .icon-label {
+  position: absolute;
+  top: 110%; 
+  left: 50%;
+  transform: translateX(-50%) translateY(0);
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 999;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+}
+
+
+.header-right input[type="radio"]:checked + label .icon-label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(2px);
+}
+
+
+.header-right input[type="radio"]:checked + label i,
+.header-right input[type="radio"]:checked + label img {
+  transform: scale(1.08);
+  transition: transform 0.15s ease;
+}
+.right-icon-container:hover {
+background-color: #d8dadf;
+}
+
+.right-icon-container i {
+font-size: 18px;
+color: #050505;
+}
+
+.header-center input[type="radio"]:checked + label .icon-label,
+.header-right input[type="radio"]:checked + label .icon-label {
+  visibility: visible;
+  animation: fadeLabel 2s forwards;
+}
+
+
+@keyframes fadeLabel {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  60% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.profile-icon img {
+width: 35px;
+height: 35px;
+border-radius: 50%;
+}
+
+.profile-container {
+width: 80%;
+max-width: 1000px;
+margin: 20px auto;
+background-color: #fff;
+border-radius: 8px;
+overflow: hidden;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cover-photo {
+position: relative;
+width: 100%;
+height: 350px;
+}
+
+.cover-photo img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+.add-cover-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  background: #e4e6eb;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.add-cover-btn i {
+  color: #050505;
+}
+.cover-text {
+position: absolute;
+bottom: 50px;
+left: 50px;
+color: #fff;
+font-size: 36px;
+font-weight: bold;
+text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.profile-info {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px;
+border-bottom: 1px solid #ddd;
+}
+
+.profile-pic-large-container {
+position: relative;
+bottom: 50px;
+margin-right: 20px;
+}
+
+.profile-pic-large-container {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-camera-btn {
+  position: absolute;
+  bottom: 15px;   
+  right: 10px;     
+  background: #e4e6eb;
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.profile-camera-btn i {
+  font-size: 16px;
+  color: #050505;
+}
+
+
+.profile-pic-large {
+width: 150px;
+height: 150px;
+border-radius: 50%;
+border: 5px solid #fff;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.profile-details {
+flex-grow: 1;
+margin-left: -20px;
+}
+
+.profile-details h2 {
+margin: 0;
+font-size: 28px;
+color: #050505;
+}
+
+.profile-details p {
+margin: 5px 0 0;
+color: #65676b;
+}
+
+
+.friends-row {
+  display: flex;
+  
+}
+
+.friend-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #fff;
+  box-shadow: 0 0 3px rgba(0,0,0,0.1);
+  margin-left: -25px;
+}
+
+.friend-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  
+} 
+.action-buttons {
+display: flex;
+gap: 10px;
+}
+
+.add-to-story-btn,
+.edit-profile-btn {
+padding: 10px 15px;
+border-radius: 6px;
+border: none;
+font-weight: bold;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 15px;
+}
+
+.add-to-story-btn {
+background-color: #0015FF;
+color: #fff;
+}
+
+.edit-profile-btn {
+background-color: #e4e6eb;
+color: #050505;
+}
+
+
+.profile-nav {
+display: flex;
+justify-content: space-between;
+align-items: center;
+border-top: 1px solid #ddd;
+padding: 0 20px;
+}
+
+.profile-nav ul {
+list-style: none;
+margin: 0;
+padding: 0;
+display: flex;
+}
+
+.profile-nav ul li {
+position: relative;
+}
+
+.profile-nav ul li a {
+text-decoration: none;
+color: #65676b;
+font-weight: bold;
+padding: 15px 15px;
+display: block;
+transition: background-color 0.2s, color 0.2s;
+}
+
+.profile-nav ul li a:hover,
+.profile-nav ul li a.active {
+color: #0055FF;
+background-color: #f0f2f5;
+border-bottom: 3px solid #FFFFFF;
+}
+
+.more-dropdown .dropdown-content {
+display: none;
+position: absolute;
+background-color: #fff;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+border-radius: 8px;
+left: 0;
+top: 100%;
+}
+
+.more-dropdown:hover .dropdown-content {
+display: block;
+}
+
+.more-dropdown .dropdown-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+text-align: left;
+font-weight: normal;
+border-bottom: none;
+}
+
+.more-dropdown .dropdown-content a:hover {
+background-color: #f0f2f5;
+border-radius: 8px;
+}
+
+.nav-options .menu-btn {
+background-color: #e4e6eb;
+border: none;
+border-radius: 50%;
+width: 35px;
+height: 35px;
+font-size: 18px;
+color: #050505;
+cursor: pointer;
+transition: background-color 0.2s;
+}
+
+.nav-options .menu-btn:hover {
+background-color: #d8dadf;
+}
+
+
+.content-area {
+display: flex;
+gap: 20px;
+padding: 20px;
+align-items: flex-start;
+}
+
+.left-column {
+flex: 0 0 350px;
+}
+
+.right-column {
+flex: 1;
+}
+
+.card {
+background-color: #fff;
+border-radius: 8px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+padding: 20px;
+margin-bottom: 20px;
+}
+
+/* Intro Card */
+.intro-card h3 {
+margin-top: 0;
+color: #050505;
+}
+
+.intro-card p {
+color: #65676b;
+line-height: 1.5;
+margin-bottom: 15px;
+}
+
+.edit-btn {
+width: 100%;
+padding: 10px;
+background-color: #e4e6eb;
+border: none;
+border-radius: 6px;
+font-weight: bold;
+color: #050505;
+cursor: pointer;
+margin-bottom: 10px;
+transition: background-color 0.2s;
+}
+
+.edit-btn:hover {
+background-color: #d8dadf;
+}
+
+.intro-gallery {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 5px;
+margin-top: 15px;
+margin-bottom: 15px;
+}
+
+.intro-gallery img {
+width: 100%;
+height: 100px;
+object-fit: cover;
+border-radius: 6px;
+}
+
+/* Photos Card */
+.photos-card .card-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 15px;
+}
+
+.photos-card .card-header h3 {
+margin: 0;
+color: #050505;
+}
+
+.photos-card .card-header a {
+text-decoration: none;
+color: #0866ff;
+font-weight: bold;
+font-size: 14px;
+}
+
+.photo-grid {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 5px;
+}
+
+.photo-grid img {
+width: 100%;
+height: 100px;
+object-fit: cover;
+border-radius: 6px;
+}
+
+/* Create Post Card */
+.create-post-card {
+padding: 15px;
+}
+.create-post-card .post-input-area {
+display: flex;
+align-items: center;
+gap: 10px;
+border-bottom: 1px solid #ddd;
+padding-bottom: 10px;
+margin-bottom: 10px;
+}
+
+.create-post-card .post-input-area img {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+}
+
+.create-post-card .post-input-area input {
+flex-grow: 1;
+padding: 10px 15px;
+border: none;
+background-color: #f0f2f5;
+border-radius: 20px;
+font-size: 15px;
+}
+
+.create-post-card .post-actions {
+display: flex;
+justify-content: space-around;
+padding-top: 10px;
+}
+
+.create-post-card .action-item {
+display: flex;
+align-items: center;
+gap: 8px;
+color: #65676b;
+font-weight: bold;
+font-size: 15px;
+cursor: pointer;
+padding: 8px 10px;
+border-radius: 6px;
+transition: background-color 0.2s;
+}
+
+.create-post-card .action-item:hover {
+background-color: #f0f2f5;
+}
+
+.create-post-card .action-item .red { color: #eb4d4b; }
+.create-post-card .action-item .green { color: #2ecc71; }
+.create-post-card .action-item .blue { color: #3498db; }
+.friends-section {
+  width: 250px;
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+}
+
+.friends-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.friends-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.friends-header a {
+  font-size: 14px;
+  text-decoration: none;
+  color: #1877f2;
+}
+
+.friends-section p {
+  margin: 5px 0 10px;
+  color: gray;
+  font-size: 14px;
+}
+
+.friends-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  
+  
+  gap: 8px;
+}
+
+.friend img {
+  width: 100%;
+  height: 80px;
+  border-radius: 6px; 
+  display: block;
+  object-fit: cover;
+} 
+
+/* Posts Section */
+.posts-section .posts-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 15px;
+}
+
+.posts-section .posts-header h3 {
+margin: 0;
+color: #050505;
+}
+
+.posts-section .posts-controls {
+display: flex;
+gap: 10px;
+}
+
+.posts-section .posts-controls button {
+background-color: #e4e6eb;
+border: none;
+border-radius: 6px;
+padding: 8px 12px;
+font-weight: bold;
+color: #050505;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 5px;
+font-size: 14px;
+transition: background-color 0.2s;
+}
+
+.posts-section .posts-controls button:hover {
+background-color: #d8dadf;
+}
+
+.posts-section .view-options {
+display: flex;
+border-bottom: 1px solid #ddd;
+margin-bottom: 20px;
+}
+
+.posts-section .view-options a {
+text-decoration: none;
+color: #65676b;
+font-weight: bold;
+padding: 10px 15px;
+display: flex;
+align-items: center;
+gap: 5px;
+transition: background-color 0.2s, color 0.2s;
+border-radius: 6px 6px 0 0;
+}
+
+.posts-section .view-options a.active {
+color: #0866ff;
+border-bottom: 3px solid #0866ff;
+background-color: #e7f3ff;
+}
+
+.posts-section .view-options a:hover:not(.active) {
+background-color: #f0f2f5;
+}
+
+
+.post-card {
+padding: 15px;
+margin-bottom: 15px;
+}
+
+.post-header-top {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 10px;
+position: relative;
+}
+
+.post-header-top img {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+}
+
+.post-header-info h4 {
+margin: 0;
+font-size: 16px;
+color: #050505;
+}
+
+.post-header-info .post-date {
+font-size: 13px;
+color: #65676b;
+}
+
+.post-options-btn {
+position: absolute;
+top: 5px;
+right: 0;
+background: none;
+border: none;
+font-size: 20px;
+color: #65676b;
+cursor: pointer;
+padding: 5px;
+border-radius: 50%;
+transition: background-color 0.2s;
+}
+
+.post-options-btn:hover {
+background-color: #f0f2f5;
+}
+
+.post-text {
+color: #050505;
+line-height: 1.5;
+margin-bottom: 15px;
+}
+
+.post-images {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+gap: 5px;
+margin-top: 15px;
+margin-bottom: 15px;
+}
+
+.post-images img {
+width: 100%;
+height: 200px;
+object-fit: cover;
+border-radius: 6px;
+}
+
+.post-footer {
+display: flex;
+justify-content: space-around;
+border-top: 1px solid #eee;
+padding-top: 10px;
+margin-top: 15px;
+color: #65676b;
+font-size: 14px;
+}
+
+.post-footer .post-stat {
+display: flex;
+align-items: center;
+gap: 5px;
+}
+</style>
+</head>    
+<body>   
+<header class="header">    
+<div class="header-left">    
+<div class="fb-logo"><i class="fa-brands fa-facebook"></i></div>    
+<input type="text" placeholde="Search"class="search-bar">    
+</div>    
+<div class="header-center">
+<input type="radio" name="menu" id="home">
+  <label for="home" class="center-icon-container">
+    <i class="fa-solid fa-house"></i>
+    <span class="icon-label">Home</span>
+  </label>
+
+  <input type="radio" name="menu" id="videos">
+  <label for="videos" class="center-icon-container">
+    <i class="fa-solid fa-video"></i>
+    <span class="icon-label">Videos</span>
+  </label>
+
+  <input type="radio" name="menu" id="market">
+  <label for="market" class="center-icon-container">
+    <i class="fa-solid fa-store"></i>
+    <span class="icon-label">Marketplace</span>
+  </label>
+
+  <input type="radio" name="menu" id="friends">
+  <label for="friends" class="center-icon-container">
+    <i class="fa-solid fa-users"></i>
+    <span class="icon-label">Friends</span>
+  </label>
+  
+    <input type="radio" name="menu" id="game">
+  <label for="game" class="center-icon-container">
+    <i class="fa-solid fa-gamepad"></i>
+    <span class="icon-label">game</span>
+  </label>
+  
+</div>
+<div class="header-right">
+     <input type="radio" name="menu" id="menu" checked>
+  <label for="menu" class="right-icon-container">
+    <i class="fa-solid fa-bars"></i>
+    <span class="icon-label">Menu</span>
+  </label>
+
+  <input type="radio" name="menu" id="messenger">
+  <label for="messenger" class="right-icon-container">
+    <i class="fa-brands fa-facebook-messenger"></i>
+    <span class="icon-label">Messenger</span>
+  </label>
+
+  <input type="radio" name="menu" id="bell">
+  <label for="bell" class="right-icon-container">
+    <i class="fa-solid fa-bell"></i>
+    <span class="icon-label">bell</span>
+  </label>
+
+  <input type="radio" name="menu" id="profile">
+  <label for="profile" class="right-icon-container profile-icon">
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile">
+    <span class="icon-label">Profile</span>
+  </label>
+</div>
+    </div>    
+</header>  
+<main class="profile-container">    
+    <div class="cover-photo">    
+     <img src=" https://i.postimg.cc/pLWWXn3P/9271dafd-79cc-48ce-b0e8-230effbe72dc-20251012-011913.png" alt="Cover Photo"> <button class="add-cover-btn"> <i class="fa-duotone fa-solid fa-camera"></i>Add Cover Photo</button>   
+    <div class="cover-text">  
+    </div>    
+</div>    
+<div class="profile-info">    
+    <div class="profile-pic-large-container">    
+    <img src=" https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-large">    
+    <button class="profile-camera-btn"><i class=" fa-duotone fa-solid fa-camera"></i></button>
+    </div>    
+    <div class="profile-details">    
+        <h2>Fashion Hub</h2>    
+        <p>10K Followers</p>    
+        <div class="friends-row">    
+        <div class="friend-pic">
+         <img src="https://i.postimg.cc/TYkSgLpT/Snapchat-1263955091.jpg" alt="friend 1">
+         </div>    
+                
+         <div class="friend-pic">
+        <img src="https://i.postimg.cc/GtgQ8Dqw/Snapchat-1734041423.jpg" alt="friend 2">
+         </div> 
+            
+        <div class="friend-pic">
+        <img src=" https://i.postimg.cc/SQ17GW7c/Snapchat-1962950577.jpg" alt="friend 3"> </div>    
+        <div class="friend-pic">
+        <img src="https://i.postimg.cc/gc78hGm7/Snapchat-2104815676.jpg " alt="friend 4">
+            </div>    
+            
+      <div class="friend-pic">
+      <img src="https://i.postimg.cc/59XpT709/Snapchat-899365584.jpg " alt="friend 5">
+            </div>    
+      <div class="friend-pic">
+      <img src="https://i.postimg.cc/CxcqF0PX/cd32887f4bcb95421c3e7caad61f3dcc.jpg" alt="friend 6"> 
+            </div>
+      <div class="friend-pic">
+      <img src="https://i.postimg.cc/fTK3KZhH/Screenshot2022-11-20-01-10-16-17.jpg" alt="friend 7">
+            </div>
+      <div class="friend-pic">
+      <img src="https://i.postimg.cc/JzFz6zd7/Snapchat-1185542623.jpg" alt="friend 8">  
+      </div>
+      <div class="friend-pic">
+      <img src="https://i.postimg.cc/NFbg1srZ/Snapchat-1333428643.jpg" alt="friend 9"> 
+       </div>
+            
+            
+    </div>    
+    </div>
+    <div class="action-buttons">    
+    <button class="add-to-story-btn">    
+    <i class="fa-solid fa-circle-plus"></i> Add to Story    
+     </button>    
+     <button class="edit-profile-btn">    
+     <i class="fa-solid fa-pencil"></i> Edit Profile  
+        </button> 
+      <button><i class="fa-solid fa-angle-down"></i></button>
+    </div>    
+</div>    
+
+<nav class="profile-nav">    
+    <ul>    
+        <li><a href="#" class="active">Posts</a></li>    
+        <li><a href="#">About</a></li>    
+        <li><a href="#">Friends</a></li>    
+        <li><a href="#">Photos</a></li>    
+        <li><a href="#">Videos</a></li>    
+        <li><a href="#">Reels</a></li>    
+        <li class="more-dropdown">    
+    <a href="#">More <i class="fa-solid fa-caret-down"></i></a>    
+     <div class="dropdown-content">    
+    <a href="#">Events</a>    
+    <a href="#">Reviews</a>    
+            </div>    
+        </li>    
+    </ul>    
+    <div class="nav-options">    
+        <button class="menu-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+</nav>    
+
+<div class="content-area">    
+<div class="left-column">    
+ <div class="card intro-card">    
+ <h3>Intro</h3>    
+ <p>"Fashion Hub Center is your ultimate destination for the latest styles and trends. We offer a wide range of products for every occasion, ensuring you always look your best and express your unique personality."</p>    
+    <button class="edit-btn">Edit bio</button>    
+    <button class="edit-btn">Edit details</button>    
+    <div class="intro-gallery">    
+     <img src="https://m.media-amazon.com/images/I/41S+9swCRBL._AC_UL480_FMwebp_QL65_.jpg" alt="Clothing 1">    
+    <img src="https://m.media-amazon.com/images/I/41JKQv67T4L._AC_UL480_FMwebp_QL65_.jpg" alt="Clothing 2">    
+    <img src="https://m.media-amazon.com/images/I/51-xLtYFAHL._AC_UL480_FMwebp_QL65_.jpg" alt="Clothing 3">    
+            </div>    
+    <button class="edit-btn">Edit featured</button>    
+        </div>    
+
+    <div class="card photos-card">    
+    <div class="card-header">    
+    <h3>Photos</h3>    
+    <a href="#">see all photos</a>    
+            </div>    
+    <div class="photo-grid">    
+    <img src="https://m.media-amazon.com/images/I/61OAeZou0jL._AC_UL480_FMwebp_QL65_.jpg" alt="Thumbnail 1">    
+    <img src="https://m.media-amazon.com/images/I/51Dd5oIe7GL._AC_UL480_FMwebp_QL65_.jpg" alt="Thumbnail 2">    
+    <img src="https://m.media-amazon.com/images/I/611svVyi8VL._AC_UL480_FMwebp_QL65_.jpg" alt="Thumbnail 3">    
+    <img src="https://images-eu.ssl-images-amazon.com/images/I/51dpRgfO0FL._AC_UL330_SR330,330_.jpg" alt="Thumbnail 4">    
+    <img src="https://images-eu.ssl-images-amazon.com/images/I/71Pldm9Xd9L._AC_UL330_SR330,330_.jpg" alt="Thumbnail 5">    
+    <img src="https://images-eu.ssl-images-amazon.com/images/I/51bBe1L3PtL._AC_UL330_SR330,330_.jpg" alt="Thumbnail 6">    
+    </div>    
+       
+    </div>    
+        
+        
+    <div class="friends-section">
+    <div class="friends-header">
+    <h3>Friends</h3>
+    <a href="#">See all Friends</a>
+    </div>
+    <p>100k friends</p>
+
+    <div class="friends-grid">
+    <div class="friend"><img src="https://i.postimg.cc/TYkSgLpT/Snapchat-1263955091.jpg" alt="Friend 1"></div>
+    <div class="friend"><img src="https://i.postimg.cc/GtgQ8Dqw/Snapchat-1734041423.jpg" alt="Friend 2"></div>
+    <div class="friend"><img src="https://i.postimg.cc/SQ17GW7c/Snapchat-1962950577.jpg" alt="Friend 3"></div>
+    <div class="friend"><img src="https://i.postimg.cc/gc78hGm7/Snapchat-2104815676.jpg" alt="Friend 4"></div>
+    <div class="friend"><img src="https://i.postimg.cc/59XpT709/Snapchat-899365584.jpg" alt="Friend 5"></div>
+    <div class="friend"><img src="https://i.postimg.cc/CxcqF0PX/cd32887f4bcb95421c3e7caad61f3dcc.jpg" alt="Friend 6"></div>
+    <div class="friend "><img src="https://i.postimg.cc/fTK3KZhH/Screenshot2022-11-20-01-10-16-17.jpg" alt="friend 7"></div>
+    <div class="friend "><img src="https://i.postimg.cc/JzFz6zd7/Snapchat-1185542623.jpg" alt="friend 8"></div>
+    <div class="friend"><img src="https://i.postimg.cc/NFbg1srZ/Snapchat-1333428643.jpg" alt="friend 9"></div>
+    
+    </div>
+    </div>
+    </div>       
+
+    <div class="right-column">    
+    <div class="card create-post-card">    
+    <div class="post-input-area">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <input type="text" placeholder="What's on your mind, Fashion Hub?">    
+    </div>    
+    <div class="post-actions">    
+    <div class="action-item"><i class="fa-solid fa-video red"></i> Live Video</div>    
+    <div class="action-item"><i class="fa-solid fa-images green"></i> Photo/Video</div>    
+    <div class="action-item"><i class="fa-solid fa-flag blue"></i> Event</div>    
+    </div>    
+    </div>    
+
+    <div class="posts-section">    
+    <div class="posts-header">    
+    <h3>Posts</h3>    
+    <div class="posts-controls">    
+    <button class="filter-btn"><i class="fa-solid fa-filter"></i> Filter</button>    
+    <button class="manage-posts-btn"><i class="fa-solid fa-gear"></i> Manage post</button>    
+    </div>    
+    </div>    
+    <div class="view-options">    
+    <a href="#" class="active"><i class="fa-solid fa-list"></i> List view</a>    
+    <a href="#"><i class="fa-solid fa-grip"></i> Grid view</a>    
+    </div>    
+
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">20September </span>    
+    </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+    <p class="post-text">"We proudly present our new collection of elegant evening wear!Perfect for any special occasion, these T-shirts feature stunning designs and luxurious fabrics. Available in sizes S–XL."</p>
+    <div class="post-images">
+    <img src="https://i.postimg.cc/zvYjn51G/659ece3f6e911265716481.jpg" alt="Post Clothing">
+    <img src="https://i.postimg.cc/y6RpWpzP/31lve-zi-Xx-L-SY1000.jpg" alt="Post Clothing1">
+    </div>
+    <p> ❤980k</p>
+    <div class="post-footer">
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>
+
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div>    
+
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">19September </span>    
+    </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+    <p class="post-text">Stay cozy and chic this autumn with our latest knitwear collection! 🍂 Soft, comfortable, and available in a variety of seasonal colors. Get yours today!</p>    
+    <div class="post-images">    
+    <img src="https://m.media-amazon.com/images/I/51qeOeJOUnL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing 3">    
+    <img src="https://m.media-amazon.com/images/I/418CtDhvVLL._AC_UL480_QL65_.jpg" alt="Post Clothing 4">    
+    </div>    
+    <p><i class="fa-solid fa-heart"></i>700k</p>  
+    <div class="post-footer">           
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>  
+                   
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div>    
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">18September </span>    
+    </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+    <p class="post-text">“Discover the joy of dressing your little stars in outfits made just for them. Fun, stylish, and incredibly comfortable, our children’s wear is crafted to keep up with every giggle, every step, and every dream. Clothes that grow with their happiness, because your kids deserve the best.”
+    </p>    
+    <div class="post-images">    
+    <img src="https://m.media-amazon.com/images/I/61nOnYRoiZL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing 5">    
+    <img src=" https://m.media-amazon.com/images/I/61Cxc8V7XkL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing 6">    
+    </div>    
+    <p><i class="fa-solid fa-heart"></i>900k</p>  
+    <div class="post-footer">           
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>  
+                   
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div> 
+            
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">17September </span>    
+    </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+    <p class="post-text">
+    “Discover men’s wear that blends comfort with elegance. Whether at work, on the weekend, or out at night,our collection brings you versatile designs, durable fabrics, and a fit that feels just right. It’s not just clothing, it’s a lifestyle built for modern men.”
+    </p>    
+    <div class="post-images">    
+    <img src="https://images-eu.ssl-images-amazon.com/images/I/718dj9OwSDL._AC_UL330_SR330,330_.jpg" alt="Post Clothing 6">    
+    <img src="https://images-eu.ssl-images-amazon.com/images/I/61GSDwXN2uL._AC_UL330_SR330,330_.jpg" alt="Post Clothing 7">    
+    </div>    
+    <p><i class="fa-solid fa-heart"></i>600k</p>  
+    <div class="post-footer">   
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>  
+                   
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div>    
+            
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">16September </span>    
+    </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+    <p class="post-text">
+    “Discover women’s wear made for every moment of your life. Whether it’s work, weekends, or special occasions, our collection brings you versatile fashion that balances elegance and comfort. Clothes that inspire confidence and highlight your natural beauty — because you deserve to shine every day.”
+    </p>    
+    <div class="post-images">    
+    <img src="https://m.media-amazon.com/images/I/41ZhJMzQ3BL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing 9">    
+    <img src="https://m.media-amazon.com/images/I/41KGOUFQRVL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing 10">    
+    </div>    
+    <p><i class="fa-solid fa-heart"></i>650k</p>  
+    <div class="post-footer">  
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>  
+                   
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div>    
+            
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">15September </span>   </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    </div>    
+    <p class="post-text">“Wrap your little ones in comfort and style 💕 Soft fabrics, playful prints, and happy vibes only. Don’t miss our newest arrivals!”</p>    
+    <div class="post-images">    
+    <img src="https://m.media-amazon.com/images/I/31pxAHUyFFL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing 11">    
+    <img src="https://m.media-amazon.com/images/I/61PldGhnKtL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing12">    
+    </div>    
+    <p><i class="fa-solid fa-heart"></i>500k</p>  
+    <div class="post-footer"> 
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>  
+                   
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div>    
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">13September </span>    
+    </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+    <p class="post-text">“Effortless style meets all-day comfort 🔥 Explore our men’s fashion — perfect for any occasion, any season.”
+                    
+    </p>    
+    <div class="post-images">    
+    <img src="https://m.media-amazon.com/images/I/51AJZ7l0aML._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing 13">    
+    <img src="https://images-eu.ssl-images-amazon.com/images/I/51dpRgfO0FL._AC_UL330_SR330,330_.jpg" alt="Post Clothing 14">    
+    </div>    
+    <p><i class="fa-solid fa-heart"></i>550k</p>  
+    <div class="post-footer">  
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>  
+                   
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div>    
+            
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">13September </span>    
+    </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+    <p class="post-text">“From office days to weekend nights ✨ Our women’s wear brings comfort, confidence, and beauty to every moment. Shop the look today!”
+                    
+    </p>    
+    <div class="post-images">    
+    <img src="https://m.media-amazon.com/images/I/51nEvCd3qQL._AC_UL480_QL65_.jpg" alt="Post Clothing 15">    
+    <img src="https://m.media-amazon.com/images/I/31RBP21fQnL._AC_.jpg" alt="Post Clothing 16">    
+    </div>    
+    <p><i class="fa-solid fa-heart"></i>400k</p>  
+    <div class="post-footer">   
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>  
+                   
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div>    
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">10September </span>    
+    </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+    <p class="post-text">“Make playtime extra fun with our new kids’ collection! 🎈 Bright colors, comfy fabrics, and designs made for endless adventures. Shop now!”
+                    
+    </p>    
+    <div class="post-images">    
+    <img src="https://m.media-amazon.com/images/I/51lAvVorYgL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing 17">    
+    <img src="https://m.media-amazon.com/images/I/71dGVTCiNDL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing18 ">    
+    </div>    
+    <p><i class="fa-solid fa-heart"></i>350k</p>  
+    <div class="post-footer">       
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>  
+                   
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div>    
+            
+            
+            
+    <div class="card post-card">    
+    <div class="post-header-top">    
+    <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="Profile" class="profile-pic-small">    
+    <div class="post-header-info">    
+    <h4>Fashion Hub</h4>    
+    <span class="post-date">8September </span>    
+    </div>    
+    <button class="post-options-btn"><i class="fa-solid fa-ellipsis"></i></button>    
+    </div>    
+    <p class="post-text">
+    “From work to weekends, our men’s wear has you covered 💼✨ Smart, versatile, and built for every moment. Discover the collection now!”
+    </p>    
+    <div class="post-images">    
+    <img src="https://images-eu.ssl-images-amazon.com/images/I/51bBe1L3PtL._AC_UL330_SR330,330_.jpg" alt="Post Clothing 19">    
+    <img src="https://m.media-amazon.com/images/I/51Dd5oIe7GL._AC_UL480_FMwebp_QL65_.jpg" alt="Post Clothing 20">    
+    </div>    
+    <p><i class="fa-solid fa-heart"></i>300k</p>  
+    <div class="post-footer">           
+    <div class="post-stat"><i class="fa-solid fa-heart"></i> </div>  
+                   
+    <div class="post-stat"><i class="fa-regular fa-comment"></i></div>    
+    <div class="post-stat"><i class="fa-brands fa-whatsapp"></i></div>  
+                                              
+    <div class="post-stat"> <i class="fa-solid fa-share"></i></div>  
+    </div>    
+    </div>    
+    </div>    
+    </div>    
+    </div>
+    </main> 
+    </body>    
+    </html>  

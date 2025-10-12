@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> Fashion Hub</title>
+  
+  <!-- أيقونات FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    /* --------- Reset --------- */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background 0.3s, color 0.3s;
+}
+
+.container {
+  display: flex;
+}
+
+/* --------- زرار تبديل الوضع --------- */
+#mode-toggle {
+  display: none;
+}
+
+.toggle-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background: #222;
+  color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 18px;
+}
+
+.toggle-btn i.fa-sun {
+  display: none;
+}
+
+/*    checkbox    */
+#mode-toggle:checked ~ .toggle-btn {
+  background: #ddd;
+  color: #000;
+}
+
+#mode-toggle:checked ~ .toggle-btn i.fa-sun {
+  display: block;
+}
+
+#mode-toggle:checked ~ .toggle-btn i.fa-moon {
+  display: none;
+}
+
+/* --------- الوضع الداكن الافتراضي --------- */
+body {
+  background: #000;
+  color: #fff;
+}
+
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-right: 1px solid #333;
+}
+
+.logo {
+  font-size: 22px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+}
+
+.logo i{
+color: #e1306c;  
+font-size: 24px;  
+  
+  
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  padding: 12px 5px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+}
+
+.sidebar ul li:hover {
+  background: #111;
+}
+
+.btn {
+  background: #262626;
+  color: #fff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #444;
+}
+
+.link {
+  color: #3897f0;
+}
+
+/* --------- Profile --------- */
+.profile-container {
+  margin-left: 240px;
+  flex: 1;
+  max-width: 900px;
+  padding: 20px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #333;
+  padding-bottom: 20px;
+}
+
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #ff00ff;
+  margin-right: 30px;
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.username {
+  margin: 0;
+}
+
+.settings-icon {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.stats {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding: 10px 0;
+  margin: 0;
+}
+
+.stats li {
+  font-size: 14px;
+}
+
+.highlights {
+  display: flex;
+  gap: 15px;
+  padding: 20px 0;
+  border-bottom: 1px solid #333;
+}
+
+.highlight {
+  text-align: center;
+}
+
+.highlight img {
+  border-radius: 50%;
+  border: 2px solid #555;
+  width: 70px;
+  height: 70px;
+}
+/* Tabs */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+  margin-top: 20px;
+}
+
+.tabs input {
+  display: none;
+}
+
+.tabs label {
+  padding: 12px 0;
+  cursor: pointer;
+  font-size: 12px;
+  color: #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-transform: uppercase;
+}
+
+.tabs label i {
+  font-size: 18px;
+}
+
+.tabs input:checked + label {
+  color: #fff;
+  border-top: 2px solid #fff;
+}
+
+.tab-content {
+  margin-top: 15px;
+}
+
+/* Hide all contents */
+.tab-content .content {
+  display: none;
+  height: auto;
+}
+
+/* Show only selected */
+#posts:checked ~ .tab-content .posts {
+  display: grid;
+
+}
+
+#reels:checked ~ .tab-content .reels {
+  display: grid;
+  
+}
+
+#tagged:checked ~ .tab-content .tagged {
+  display: block;
+}
+
+/* Posts  */
+.posts {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 20px;
+  display: grid;
+}
+.posts post {
+  position: relative;
+  overflow: hidden;
+  
+  
+}
+.posts img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display: block;
+  height: auto;
+}
+
+/* Reels  */
+.reels {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  height: auto;
+}
+
+.reels video {
+  width: 100%;
+  aspect-ratio: 9/16;
+  object-fit: cover;
+  height: auto;
+}
+
+/* Tagged */
+.tagged {
+  text-align: center;
+  padding: 40px;
+  font-size: 16px;
+  color: #888;
+  height: auto;
+}
+
+
+/*--------checkbox --------- */
+#mode-toggle:checked ~ .container,
+#mode-toggle:checked ~ .container * {
+  background: #fff !important;
+  color: #000 !important;
+  border-color: #ddd !important;
+}
+
+#mode-toggle:checked ~ .container .btn {
+  background: #eee !important;
+  color: #000 !important;
+}
+
+#mode-toggle:checked ~ .container .btn:hover {
+  background: #ddd !important;
+}
+
+#mode-toggle:checked ~ .container .link {
+  color: #00376b !important;
+}
+  </style>
+</head>
+<body>
+  <!-- زرار تبديل الوضع -->
+  <input type="checkbox" id="mode-toggle">
+  <label for="mode-toggle" class="toggle-btn">
+    <i class="fa-solid fa-moon"></i>
+    <i class="fa-solid fa-sun"></i>
+  </label>
+
+  <div class="container">
+    
+    <!-- الشريط الجانبي -->
+  <aside class="sidebar">
+  <h2 class="logo"><i class="fa-brands fa-instagram"></i>instagram</h2>
+  <ul>
+  <li><i class="fa-solid fa-house"></i> Home</li>
+  <li><i class="fa-solid fa-magnifying-glass"></i> Search</li>
+  <li><i class="fa-regular fa-compass"></i> Explore</li>
+  <li><i class="fa-solid fa-clapperboard"></i> Reels</li>
+  <li><i class="fa-brands fa-facebook-messenger"></i> Messages</li>
+  <li><i class="fa-regular fa-heart"></i> Notifications</li>
+  <li><i class="fa-regular fa-square-plus"></i> Create</li>
+  <li><i class="fa-regular fa-user"></i> Profile</li>
+  <li><i class="fa-solid fa-bars"></i> More</li>
+  </ul>
+  </aside>
+    
+    <!-- محتوى البروفايل -->
+  <main class="profile-container">
+      
+      <!-- الهيدر -->
+  <div class="profile-header">
+  <img src="https://i.postimg.cc/26zfjpVM/4c06377c-0324-4bdf-b8ed-95c9d3d204f9-20251012-010540.png" alt="profile" class="profile-pic">
+  <div class="profile-info">
+  <div class="profile-top">
+  <h2 class="username">fashion.hub</h2>
+  <button class="btn">Follow</button>
+  <button class="btn">Message</button>
+  <i class="fa-solid fa-gear settings-icon"></i>
+  </div>
+  <ul class="stats">
+  <li><b>300</b> posts</li>
+  <li><b>25.7k</b> followers</li>
+  <li><b>500</b> following</li>
+  </ul>
+  <p class="bio">Fashion for everyone 👔👗🧒<br>Men • Women • Kids</p>
+          
+  </div>
+  </div>
+
+      <!-- highlights -->
+  <div class="highlights">
+  <div class="highlight"><img src="https://m.media-amazon.com/images/I/41S+9swCRBL._AC_UL480_FMwebp_QL65_.jpg" alt=""><p>Men</p></div>
+  <div class="highlight"><img src="https://m.media-amazon.com/images/I/61Cxc8V7XkL._AC_UL480_FMwebp_QL65_.jpg" alt=""><p>kids</p></div>
+  <div class="highlight"><img src="https://m.media-amazon.com/images/I/51qeOeJOUnL._AC_UL480_FMwebp_QL65_.jpg" alt=""><p> women</p></div>
+        
+  </div>
+  
+    <!--Tabs-->
+            
+  <div class="tabs">
+  
+  <input type="radio" name="tab" id="posts" checked>
+  <label for="posts"> <i class="fa-solid fa-square-plus"></i></label>
+
+  <input type="radio" name="tab" id="reels">
+  <label for="reels"><i class="fa-solid fa-video"></i></label>
+
+  <input type="radio" name="tab" id="tagged">
+  <label for="tagged"><i class="fa-regular fa-user"></i></label>
+  </div>
+
+    <!-- Tab Content -->
+  <div class="tab-content">
+    
+    
+      <!-- البوستات -->
+  <div class="posts">
+  <img src="https://m.media-amazon.com/images/I/41S+9swCRBL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  <img src="https://m.media-amazon.com/images/I/41JKQv67T4L._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  <img src="https://m.media-amazon.com/images/I/51-xLtYFAHL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  <img src="https://m.media-amazon.com/images/I/61OAeZou0jL._AC_UL480_FMwebp_QL65_.jpg"alt="post">
+  <img src="https://m.media-amazon.com/images/I/51Dd5oIe7GL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  <img src="https://m.media-amazon.com/images/I/611svVyi8VL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  <img src="https://m.media-amazon.com/images/I/51AJZ7l0aML._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  <img src="https://images-eu.ssl-images-amazon.com/images/I/51dpRgfO0FL._AC_UL330_SR330,330_.jpg" alt="post">
+  <img src="https://images-eu.ssl-images-amazon.com/images/I/71Pldm9Xd9L._AC_UL330_SR330,330_.jpg" alt="post ">
+  <img src="https://images-eu.ssl-images-amazon.com/images/I/61GSDwXN2uL._AC_UL330_SR330,330_.jpg" alt="post ">
+  <img src="https://images-eu.ssl-images-amazon.com/images/I/718dj9OwSDL._AC_UL330_SR330,330_.jpg" alt="post">
+  <img src="https://images-eu.ssl-images-amazon.com/images/I/51bBe1L3PtL._AC_UL330_SR330,330_.jpg" alt="post">
+  <img src="https://m.media-amazon.com/images/I/51lgEKLx1SL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  <img src="https://m.media-amazon.com/images/I/61wyE5Y6VcL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  <img src="https://m.media-amazon.com/images/I/61+KjHQd0jL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  <img src="https://m.media-amazon.com/images/I/61a7G1uzLdL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+    <img src="https://m.media-amazon.com/images/I/21qwPQzLvkL._SR480,440_.jpg" alt="post">
+    <img src="https://m.media-amazon.com/images/I/61Jhv-uAe+L._AC._SR360,460.jpg" alt="post">  
+    <img src="https://m.media-amazon.com/images/I/418CtDhvVLL._AC_UL480_QL65_.jpg" alt="post">  
+    <img src="https://m.media-amazon.com/images/I/41ZhJMzQ3BL._AC_UL480_FMwebp_QL65_.jpg" alt="post"> 
+    <img src="https://m.media-amazon.com/images/I/41KGOUFQRVL._AC_UL480_FMwebp_QL65_.jpg" alt="post"> 
+    <img src="https://m.media-amazon.com/images/I/31RBP21fQnL._AC_.jpg" alt="post">
+    <img src="https://m.media-amazon.com/images/I/51qeOeJOUnL._AC_UL480_FMwebp_QL65_.jpg" alt="post">  
+    <img src="https://m.media-amazon.com/images/I/61nOnYRoiZL._AC_UL480_FMwebp_QL65_.jpg" alt="post">  
+    <img src="https://m.media-amazon.com/images/I/61Cxc8V7XkL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+    <img src="https://m.media-amazon.com/images/I/51gHMBx6GjL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+    <img src="https://m.media-amazon.com/images/I/31pxAHUyFFL._AC_UL480_FMwebp_QL65_.jpg" alt="post"> 
+    <img src="https://m.media-amazon.com/images/I/41FwQRUIiDL._AC_UL480_FMwebp_QL65_.jpg" alt="post">  
+    <img src="https://m.media-amazon.com/images/I/411PZGhBy0L._AC_UL480_FMwebp_QL65_.jpg" alt="post"> 
+    <img src="https://m.media-amazon.com/images/I/81PaQUhjHTL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+    <img src="https://m.media-amazon.com/images/I/61PldGhnKtL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+    <img src="https://m.media-amazon.com/images/I/51ypIZcm2VL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+    <img src="https://m.media-amazon.com/images/I/71dGVTCiNDL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+    <img src="https://m.media-amazon.com/images/I/51lAvVorYgL._AC_UL480_FMwebp_QL65_.jpg" alt="post">
+  
+      <!-- Reels -->
+  <div class="content reels">
+        
+  </div>
+
+      <!-- Tagged -->
+  <div class="content tagged">
+        
+      </div>
+    </div>
+  </div> 
+      </div>
+</div>
+    </main>
+  </div>
+</body>
+</html>
+
