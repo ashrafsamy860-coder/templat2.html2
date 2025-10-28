@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نموذج تسجيل تفاعلي مع تحقق من الصحة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .lamp-container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .ceiling {
+            width: 120px;
+            height: 20px;
+            background: linear-gradient(to bottom, #8b7355, #6b5a45);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .cord-container {
+            position: relative;
+            height: 150px;
+            display: flex;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .cord {
+            width: 6px;
+            height: 150px;
+            background: linear-gradient(to right, 
+                #8b4513 0%, 
+                #a0522d 30%, 
+                #8b4513 70%, 
+                #654321 100%);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: top center;
+            box-shadow: 
+                inset 2px 0 0 rgba(255, 255, 255, 0.1),
+                inset -2px 0 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .cord.pulled {
+            transform: translateY(30px) scaleY(0.9);
+        }
+
+        .cord-knot {
+            width: 16px;
+            height: 12px;
+            background: linear-gradient(to bottom, #8b4513, #654321);
+            border-radius: 4px;
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 6;
+        }
+
+        .cord::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: #654321;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .lamp {
+            width: 120px;
+            height: 80px;
+            background: radial-gradient(circle at 50% 30%, #f1c27d, #e0b070, #b8860b);
+            border-radius: 60px 60px 10px 10px;
+            position: relative;
+            box-shadow: 
+                0 0 30px rgba(255, 215, 0, 0.7),
+                inset 0 -10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .lamp.off {
+            background: radial-gradient(circle at 50% 30%, #555, #333, #222);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .lamp::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px 50px 5px 5px;
+            pointer-events: none;
+        }
+
+        .light {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 0;
+            background: radial-gradient(ellipse at center, 
+                rgba(255, 255, 200, 0.9) 0%, 
+                rgba(255, 255, 150, 0.5) 30%, 
+                rgba(255, 255, 100, 0.2) 60%, 
+                transparent 80%);
+            border-radius: 150px/50px;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            z-index: 1;
+            filter: blur(5px);
+        }
+
+        .light.on {
+            height: 400px;
+            opacity: 1;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translateY(50px) scale(0.95);
+            opacity: 0;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-container.visible {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #f1c27d;
+            font-size: 2.2rem;
+            text-shadow: 0 0 10px rgba(241, 194, 125, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #e0b070;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #f1c27d;
+            box-shadow: 0 0 10px rgba(241, 194, 125, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        input.error, select.error {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .date-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .date-group select {
+            flex: 1;
+        }
+
+        /* تخصيص ألوان خيارات التاريخ - بيضاء مع نص أسود */
+        select option {
+            background-color: #fff !important;
+            color: #000 !important;
+        }
+
+        /* إزالة التخصيص السابق للقائمة المنسدلة */
+        select {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #f1c27d, #e0b070);
+            border: none;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(to right, #e0b070, #d4a45f);
+            box-shadow: 0 0 15px rgba(241, 194, 125, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::after {
+            left: 100%;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+            text-align: right;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        .instruction {
+            text-align: center;
+            margin-top: 20px;
+            color: #e0b070;
+            font-size: 1.1rem;
+            animation: pulse 2s infinite;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .lamp-light-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(255, 255, 200, 0.4), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        .lamp.off .lamp-light-effect {
+            opacity: 0;
+        }
+
+        .lamp:not(.off) .lamp-light-effect {
+            opacity: 1;
+        }
+
+        .cord-swing {
+            animation: swing 3s ease-in-out infinite;
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        /* رسالة التأكيد */
+        .confirmation-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 2px solid rgba(241, 194, 125, 0.3);
+            max-width: 90%;
+            width: 400px;
+        }
+
+        .confirmation-message.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .confirmation-icon {
+            font-size: 80px;
+            color: #f1c27d;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(241, 194, 125, 0.7);
+            animation: bounce 1s ease infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .confirmation-title {
+            font-size: 28px;
+            color: #f1c27d;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(241, 194, 125, 0.5);
+        }
+
+        .confirmation-text {
+            font-size: 18px;
+            color: #e0e0e0;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .confirmation-btn {
+            background: linear-gradient(to right, #f1c27d, #e0b070);
+            border: none;
+            border-radius: 10px;
+            color: #1a1a2e;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 12px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .confirmation-btn:hover {
+            background: linear-gradient(to right, #e0b070, #d4a45f);
+            box-shadow: 0 0 15px rgba(241, 194, 125, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+            }
+            
+            .date-group {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .cord {
+                width: 5px;
+            }
+            
+            .confirmation-message {
+                width: 90%;
+                padding: 30px 20px;
+            }
+            
+            .confirmation-icon {
+                font-size: 60px;
+            }
+            
+            .confirmation-title {
+                font-size: 24px;
+            }
+            
+            .confirmation-text {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <!-- رسالة التأكيد -->
+    <div class="overlay" id="overlay"></div>
+    <div class="confirmation-message" id="confirmationMessage">
+        <div class="confirmation-icon">✨</div>
+        <h2 class="confirmation-title">تم التسجيل بنجاح!</h2>
+        <p class="confirmation-text">لقد تم تسجيل بياناتك بشكل رائع وجميل!</p>
+        <button class="confirmation-btn" id="confirmationBtn">موافق</button>
+    </div>
+    
+    <div class="container">
+        <div class="lamp-container">
+            <div class="ceiling"></div>
+            <div class="cord-container">
+                <div class="cord cord-swing" id="cord">
+                    <div class="cord-knot"></div>
+                </div>
+            </div>
+            <div class="lamp off" id="lamp">
+                <div class="lamp-light-effect"></div>
+            </div>
+            <div class="light" id="light"></div>
+        </div>
+        
+        <p class="instruction" id="instruction">اسحب الحبل لإضاءة النموذج</p>
+        
+        <div class="form-container" id="formContainer">
+            <h1>نموذج التسجيل</h1>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="firstName">الاسم الأول</label>
+                    <input type="text" id="firstName" name="firstName" required minlength="3">
+                    <div class="error-message" id="firstNameError">يجب أن يكون الاسم الأول 3 أحرف على الأقل</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">الاسم الأخير</label>
+                    <input type="text" id="lastName" name="lastName" required minlength="3">
+                    <div class="error-message" id="lastNameError">يجب أن يكون الاسم الأخير 3 أحرف على الأقل</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="emailError">يرجى إدخال بريد إلكتروني صحيح</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthDate">تاريخ الميلاد</label>
+                    <div class="date-group">
+                        <select id="birthYear" name="birthYear" required>
+                            <option value="">السنة</option>
+                        </select>
+                        <select id="birthMonth" name="birthMonth" required>
+                            <option value="">الشهر</option>
+                        </select>
+                        <select id="birthDay" name="birthDay" required>
+                            <option value="">اليوم</option>
+                        </select>
+                    </div>
+                    <div class="error-message" id="birthDateError">يرجى اختيار تاريخ ميلاد صحيح</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" required minlength="8">
+                    <div class="error-message" id="passwordError">يجب أن تكون كلمة المرور 8 أحرف على الأقل</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">تأكيد كلمة المرور</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error-message" id="confirmPasswordError">كلمات المرور غير متطابقة</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">رقم التليفون</label>
+                    <input type="tel" id="phone" name="phone" required minlength="11" maxlength="11">
+                    <div class="error-message" id="phoneError">يجب أن يكون رقم التليفون 11 رقماً</div>
+                </div>
+                
+                <button type="submit" class="submit-btn">تسجيل</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // إنشاء النجوم في الخلفية
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // ملء خيارات تاريخ الميلاد
+        function populateDateOptions() {
+            // ملء السنوات (من 1950 إلى 2025)
+            const yearSelect = document.getElementById('birthYear');
+            for (let year = 2025; year >= 1950; year--) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            }
+            
+            // ملء الأشهر
+            const monthSelect = document.getElementById('birthMonth');
+            const months = [
+                'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+                'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+            ];
+            
+            months.forEach((month, index) => {
+                const option = document.createElement('option');
+                option.value = index + 1;
+                option.textContent = month;
+                monthSelect.appendChild(option);
+            });
+            
+            // ملء الأيام (1-31)
+            const daySelect = document.getElementById('birthDay');
+            for (let day = 1; day <= 31; day++) {
+                const option = document.createElement('option');
+                option.value = day;
+                option.textContent = day;
+                daySelect.appendChild(option);
+            }
+        }
+
+        // التحكم في إضاءة الأباجورة وإظهار النموذج
+        let isLampOn = false;
+        let isPulling = false;
+        const cord = document.getElementById('cord');
+        const lamp = document.getElementById('lamp');
+        const light = document.getElementById('light');
+        const formContainer = document.getElementById('formContainer');
+        const instruction = document.getElementById('instruction');
+        
+        // إضافة تأثير السحب للحبل
+        cord.addEventListener('mousedown', startPull);
+        cord.addEventListener('touchstart', startPull);
+        
+        document.addEventListener('mouseup', endPull);
+        document.addEventListener('touchend', endPull);
+        
+        function startPull(e) {
+            e.preventDefault();
+            if (isPulling) return;
+            
+            isPulling = true;
+            cord.classList.remove('cord-swing');
+            cord.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            
+            // تأثير السحب
+            setTimeout(() => {
+                cord.classList.add('pulled');
+            }, 100);
+            
+            // تبديل حالة المصباح بعد السحب
+            setTimeout(() => {
+                toggleLamp();
+                isPulling = false;
+                
+                // إعادة الحركة التلقائية بعد التبديل
+                setTimeout(() => {
+                    cord.classList.remove('pulled');
+                    cord.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    
+                    if (!isLampOn) {
+                        setTimeout(() => {
+                            cord.classList.add('cord-swing');
+                        }, 500);
+                    }
+                }, 800);
+            }, 500);
+        }
+        
+        function endPull() {
+            if (!isPulling) return;
+            isPulling = false;
+        }
+        
+        function toggleLamp() {
+            isLampOn = !isLampOn;
+            
+            if (isLampOn) {
+                // تشغيل الإضاءة وإظهار النموذج
+                lamp.classList.remove('off');
+                light.classList.add('on');
+                formContainer.classList.add('visible');
+                instruction.textContent = "اسحب الحبل مرة أخرى لإطفاء النموذج";
+            } else {
+                // إطفاء الإضاءة وإخفاء النموذج
+                lamp.classList.add('off');
+                light.classList.remove('on');
+                formContainer.classList.remove('visible');
+                instruction.textContent = "اسحب الحبل لإضاءة النموذج";
+            }
+        }
+
+        // التحقق من صحة الحقول في الوقت الفعلي
+        function setupRealTimeValidation() {
+            const form = document.getElementById('registrationForm');
+            const inputs = form.querySelectorAll('input, select');
+            
+            inputs.forEach(input => {
+                // التحقق أثناء الكتابة
+                input.addEventListener('input', function() {
+                    validateField(this);
+                });
+                
+                // التحقق عند فقدان التركيز
+                input.addEventListener('blur', function() {
+                    validateField(this);
+                });
+            });
+        }
+        
+        // التحقق من صحة حقل معين
+        function validateField(field) {
+            const errorElement = document.getElementById(field.id + 'Error');
+            
+            // إخفاء رسالة الخطأ أولاً
+            if (errorElement) {
+                errorElement.style.display = 'none';
+                field.classList.remove('error');
+            }
+            
+            let isValid = true;
+            let errorMessage = '';
+            
+            switch(field.id) {
+                case 'firstName':
+                case 'lastName':
+                    if (field.value.length < 3 && field.value.length > 0) {
+                        isValid = false;
+                        errorMessage = 'يجب أن يكون الاسم 3 أحرف على الأقل';
+                    }
+                    break;
+                    
+                case 'email':
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (field.value && !emailRegex.test(field.value)) {
+                        isValid = false;
+                        errorMessage = 'يرجى إدخال بريد إلكتروني صحيح';
+                    }
+                    break;
+                    
+                case 'password':
+                    if (field.value.length < 8 && field.value.length > 0) {
+                        isValid = false;
+                        errorMessage = 'يجب أن تكون كلمة المرور 8 أحرف على الأقل';
+                    }
+                    break;
+                    
+                case 'confirmPassword':
+                    const password = document.getElementById('password').value;
+                    if (field.value !== password) {
+                        isValid = false;
+                        errorMessage = 'كلمات المرور غير متطابقة';
+                    }
+                    break;
+                    
+                case 'phone':
+                    const phoneRegex = /^\d{11}$/;
+                    if (field.value && !phoneRegex.test(field.value)) {
+                        isValid = false;
+                        errorMessage = 'يجب أن يكون رقم التليفون 11 رقماً';
+                    }
+                    break;
+                    
+                case 'birthYear':
+                case 'birthMonth':
+                case 'birthDay':
+                    const year = document.getElementById('birthYear').value;
+                    const month = document.getElementById('birthMonth').value;
+                    const day = document.getElementById('birthDay').value;
+                    
+                    if (year && month && day) {
+                        const selectedDate = new Date(year, month - 1, day);
+                        const today = new Date();
+                        
+                        if (selectedDate > today) {
+                            isValid = false;
+                            errorMessage = 'لا يمكن أن يكون تاريخ الميلاد في المستقبل';
+                        }
+                    }
+                    break;
+            }
+            
+            // إذا كان الحقل غير صالح، عرض رسالة الخطأ
+            if (!isValid && errorElement) {
+                errorElement.textContent = errorMessage;
+                errorElement.style.display = 'block';
+                field.classList.add('error');
+            }
+            
+            return isValid;
+        }
+        
+        // التحقق من صحة النموذج بأكمله
+        function validateForm() {
+            const form = document.getElementById('registrationForm');
+            const inputs = form.querySelectorAll('input, select');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!validateField(input)) {
+                    isValid = false;
+                }
+            });
+            
+            return isValid;
+        }
+
+        // التحقق من صحة النموذج وعرض رسالة التأكيد
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateForm()) {
+                // عرض رسالة التأكيد
+                showConfirmationMessage();
+            } else {
+                // عرض رسالة خطأ عامة
+                alert('يرجى تصحيح الأخطاء في النموذج قبل الإرسال');
+            }
+        });
+
+        // عرض رسالة التأكيد
+        function showConfirmationMessage() {
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            const overlay = document.getElementById('overlay');
+            
+            confirmationMessage.classList.add('active');
+            overlay.classList.add('active');
+            
+            // إعادة تعيين النموذج بعد التأكيد
+            document.getElementById('registrationForm').reset();
+        }
+
+        // إغلاق رسالة التأكيد
+        document.getElementById('confirmationBtn').addEventListener('click', function() {
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            const overlay = document.getElementById('overlay');
+            
+            confirmationMessage.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // إغلاق رسالة التأكيد عند النقر على الخلفية
+        document.getElementById('overlay').addEventListener('click', function() {
+            const confirmationMessage = document.getElementById('confirmationMessage');
+            const overlay = document.getElementById('overlay');
+            
+            confirmationMessage.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // تهيئة الصفحة
+        window.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            populateDateOptions();
+            setupRealTimeValidation();
+        });
+    </script>
+</body>
+</html>

@@ -1,50 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style2.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="css/style3.css">
+    <title>نموذج تسجيل تفاعلي مع تحقق من الصحة</title>
+    
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-  </div>
-</nav>
+    <div class="stars" id="stars"></div>
     
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- رسالة التأكيد -->
+    <div class="overlay" id="overlay"></div>
+    <div class="confirmation-message" id="confirmationMessage">
+        <div class="confirmation-icon">✨</div>
+        <h2 class="confirmation-title">تم التسجيل بنجاح!</h2>
+        <p class="confirmation-text">لقد تم تسجيل بياناتك بشكل رائع وجميل!</p>
+        <button class="confirmation-btn" id="confirmationBtn">موافق</button>
+    </div>
+    
+    <div class="container">
+        <div class="lamp-container">
+            <div class="ceiling"></div>
+            <div class="cord-container">
+                <div class="cord cord-swing" id="cord">
+                    <div class="cord-knot"></div>
+                </div>
+            </div>
+            <div class="lamp off" id="lamp">
+                <div class="lamp-light-effect"></div>
+            </div>
+            <div class="light" id="light"></div>
+        </div>
+        
+      
+        
+        <div class="form-container" id="formContainer">
+            <h1>نموذج التسجيل</h1>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="firstName">الاسم الأول</label>
+                    <input type="text" id="firstName" name="firstName" required minlength="3">
+                    <div class="error-message" id="firstNameError">يجب أن يكون الاسم الأول 3 أحرف على الأقل</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">الاسم الأخير</label>
+                    <input type="text" id="lastName" name="lastName" required minlength="3">
+                    <div class="error-message" id="lastNameError">يجب أن يكون الاسم الأخير 3 أحرف على الأقل</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="emailError">يرجى إدخال بريد إلكتروني صحيح</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthDate">تاريخ الميلاد</label>
+                    <div class="date-group">
+                        <select id="birthYear" name="birthYear" required>
+                            <option value="">السنة</option>
+                        </select>
+                        <select id="birthMonth" name="birthMonth" required>
+                            <option value="">الشهر</option>
+                        </select>
+                        <select id="birthDay" name="birthDay" required>
+                            <option value="">اليوم</option>
+                        </select>
+                    </div>
+                    <div class="error-message" id="birthDateError">يرجى اختيار تاريخ ميلاد صحيح</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">كلمة المرور</label>
+                    <input type="password" id="password" name="password" required minlength="8">
+                    <div class="error-message" id="passwordError">يجب أن تكون كلمة المرور 8 أحرف على الأقل</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">تأكيد كلمة المرور</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error-message" id="confirmPasswordError">كلمات المرور غير متطابقة</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">رقم التليفون</label>
+                    <input type="tel" id="phone" name="phone" required minlength="11" maxlength="11">
+                    <div class="error-message" id="phoneError">يجب أن يكون رقم التليفون 11 رقماً</div>
+                </div>
+                
+                <button type="submit" class="submit-btn">تسجيل</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="JS/script.js">
+      
+    </script>
 </body>
 </html>
